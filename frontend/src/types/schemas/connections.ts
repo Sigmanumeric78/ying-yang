@@ -1,7 +1,9 @@
+import { z } from "zod";
+
 export interface Connection {
   id: string;
   userId: string;
   connectedAt: string;
 }
 
-export const ConnectionSchema = { parse: (v: unknown) => v };
+export const ConnectionSchema = z.any();

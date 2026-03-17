@@ -1,4 +1,4 @@
-import { envConfig } from "virtual:env-config";
+import { envConfig } from "../virtual-env-config";
 const siteKey = envConfig.recaptchaSiteKey;
 
 const captchas: Record<string, number> = {};

@@ -1,4 +1,4 @@
-import { envConfig } from "virtual:env-config";
+import { envConfig } from "../virtual-env-config";
 import { qs } from "../utils/dom";
 
 qs("#nocss .requestedStylesheets")?.setHtml(

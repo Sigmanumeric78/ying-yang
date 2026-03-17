@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export type Mode = "time" | "words" | "quote" | "zen" | "custom";
 
 export type Difficulty = "normal" | "expert" | "master";
@@ -34,3 +36,9 @@ export interface PersonalBests {
   zen: Record<string, PersonalBest[]>;
   custom: Record<string, PersonalBest[]>;
 }
+
+export const ModeSchema = z.any();
+export const Mode2Schema = z.any();
+export const DifficultySchema = z.any();
+export const PersonalBestSchema = z.any();
+export const PersonalBestsSchema = z.any();

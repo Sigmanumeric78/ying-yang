@@ -2,7 +2,7 @@ import { Language, LanguageObject } from "@whitespaces/schemas/languages";
 import { Challenge } from "@whitespaces/schemas/challenges";
 import { LayoutObject } from "@whitespaces/schemas/layouts";
 import { toHex } from "./strings";
-import { languageHashes } from "virtual:language-hashes";
+import { languageHashes } from "../virtual-language-hashes";
 import { isDevEnvironment } from "./misc";
 
 //pin implementation

@@ -17,6 +17,14 @@ export function getAllFunboxes(): FunboxMetadata[] {
   return Object.values(funboxes);
 }
 
+export function getFunboxNames(): string[] {
+  return Object.keys(funboxes);
+}
+
+export function getFunboxObject(): Record<string, FunboxMetadata> {
+  return funboxes;
+}
+
 export function checkCompatibility(
   funboxes: FunboxMetadata[],
 ): { valid: boolean; error?: string } {

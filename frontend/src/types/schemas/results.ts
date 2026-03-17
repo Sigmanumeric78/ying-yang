@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { Mode } from "./shared";
 
 export interface CompletedEvent {
@@ -30,3 +31,29 @@ export interface CompletedEvent {
   timestamp: number;
   hash?: string;
 }
+
+export interface Result {
+  id: string;
+  wpm: number;
+  acc: number;
+  mode: Mode;
+  timestamp: number;
+}
+
+export interface CustomTextSettings {
+  text: string;
+  isWordRandom: boolean;
+  isTimeRandom: boolean;
+}
+
+export interface ChartData {
+  wpm: number[];
+  errors: number[];
+}
+
+export const CompletedEventSchema = z.any();
+export const ResultSchema = z.any();
+export const CustomTextSettingsSchema = z.any();
+export const CustomTextLimitModeSchema = z.any();
+export const CustomTextModeSchema = z.any();
+export const ChartDataSchema = z.any();

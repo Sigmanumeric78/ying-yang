@@ -1,17 +1,23 @@
 {
   "compilerOptions": {
-    "moduleResolution": "Bundler",
+    "target": "ESNext",
     "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
     "jsxImportSource": "solid-js",
-    "types": ["vitest/globals"],
+    "strict": false,
+    "skipLibCheck": true,
+    "types": ["vite/client", "node", "vitest/globals"],
+    "baseUrl": ".",
+    "paths": {
+      "@whitespaces/schemas/*": ["./src/types/schemas/*"],
+      "@whitespaces/util/*": ["./src/ts/utils/local/*"],
+      "@whitespaces/contracts/*": ["./src/ts/utils/local/*"],
+      "@whitespaces/funbox": ["./src/ts/utils/local/funbox.ts"],
+    },
   },
-  "include": [
-    "./**/*.ts",
-    "./**/*.tsx",
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.d.ts",
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "vite.config.ts"],
 }

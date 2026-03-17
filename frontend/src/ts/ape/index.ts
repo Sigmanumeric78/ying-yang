@@ -1,4 +1,4 @@
-import { envConfig } from "virtual:env-config";
+import { envConfig } from "../virtual-env-config";
 import { buildClient } from "./adapters/ts-rest-adapter";
 import { contract } from "@whitespaces/contracts";
 import { devContract } from "@whitespaces/contracts/dev";

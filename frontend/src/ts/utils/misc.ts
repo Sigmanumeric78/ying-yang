@@ -1,5 +1,5 @@
 import { showLoaderBar, hideLoaderBar } from "../signals/loader-bar";
-import { envConfig } from "virtual:env-config";
+import { envConfig } from "../virtual-env-config";
 import { lastElementFromArray } from "./arrays";
 import { Config } from "@whitespaces/schemas/configs";
 import { Mode, Mode2, PersonalBests } from "@whitespaces/schemas/shared";

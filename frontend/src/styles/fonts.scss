@@ -1,5 +1,13 @@
 @use "sass:map";
 
+$fonts: (
+  "Roboto Mono": ("src": "RobotoMono-Regular.woff2", "weight": 400),
+  "JetBrains Mono": ("src": "JetBrainsMono-Regular.woff2", "weight": 400),
+  "Fira Code": ("src": "FiraCode-Regular.woff2", "weight": 400),
+  "Source Code Pro": ("src": "SourceCodePro-Regular.woff2", "weight": 400),
+  "Ubuntu Mono": ("src": "UbuntuMono-Regular.woff2", "weight": 400),
+) !default;
+
 @font-face {
   font-family: "Vazirmatn";
   font-style: normal;

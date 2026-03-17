@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export interface LayoutObject {
   name: string;
   keys: string[][];
@@ -5,4 +7,5 @@ export interface LayoutObject {
 
 export type LayoutName = string;
 
-export const LayoutSchema = { parse: (v: unknown) => v };
+export const LayoutObjectSchema = z.any();
+export const LayoutNameSchema = z.any();

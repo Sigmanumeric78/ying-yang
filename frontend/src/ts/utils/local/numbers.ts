@@ -2,6 +2,10 @@ export function roundTo2(num: number): number {
   return Math.round(num * 100) / 100;
 }
 
+export function roundTo1(num: number): number {
+  return Math.round(num * 10) / 10;
+}
+
 export function randomIntFromRange(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -30,4 +34,8 @@ export function mapRange(
 
 export function isSafeNumber(value: unknown): value is number {
   return typeof value === "number" && !isNaN(value) && isFinite(value);
+}
+
+export function safeNumber(n: unknown): number {
+  return typeof n === "number" && !isNaN(n) ? n : 0;
 }

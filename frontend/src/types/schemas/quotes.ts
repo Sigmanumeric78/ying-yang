@@ -1,3 +1,5 @@
+import { z } from "zod";
+
 export interface Quote {
   id: number;
   text: string;
@@ -5,4 +7,4 @@ export interface Quote {
   length?: number;
 }
 
-export const QuoteSchema = { parse: (v: unknown) => v };
+export const QuoteSchema = z.any();

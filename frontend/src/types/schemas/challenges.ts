@@ -1,7 +1,9 @@
+import { z } from "zod";
+
 export interface Challenge {
   id: string;
   name: string;
   description?: string;
 }
 
-export const ChallengeSchema = { parse: (v: unknown) => v };
+export const ChallengeSchema = z.any();
