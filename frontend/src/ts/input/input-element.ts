@@ -1,10 +1,27 @@
-const el = document.querySelector("#wordsInput") as HTMLTextAreaElement;
+let el = document.querySelector("#wordsInput") as HTMLTextAreaElement | null;
 
 if (el === null) {
-  throw new Error("Words input element not found");
+  console.warn(
+    "Words input element (#wordsInput) not found at module load time. " +
+      "Will retry on first access."
+  );
 }
 
 export function getInputElement(): HTMLTextAreaElement {
+  if (el === null) {
+    el = document.querySelector("#wordsInput") as HTMLTextAreaElement | null;
+    if (el === null) {
+      console.warn(
+        "Words input element (#wordsInput) still not found. " +
+          "Some input functionality will be unavailable."
+      );
+      // Return a dummy textarea so callers don't crash
+      el = document.createElement("textarea") as HTMLTextAreaElement;
+      el.id = "wordsInput";
+      el.style.display = "none";
+      document.body.appendChild(el);
+    }
+  }
   return el;
 }
 
