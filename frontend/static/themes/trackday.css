@@ -1,0 +1,11 @@
+[data-nav-item="test"] {
+  color: #e0513e;
+}
+
+[data-nav-item="leaderboards"] {
+  color: #ccc500;
+}
+
+[data-nav-item="about"] {
+  color: #cfcfcf;
+}

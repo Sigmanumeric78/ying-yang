@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js",
+    "strict": false,
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "allowUmdGlobalAccess": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["vite/client", "node"],
+    "baseUrl": ".",
+    "paths": {
+      "virtual:language-hashes": ["./src/ts/types/virtual-language-hashes.d.ts"],
+      "virtual:env-config": ["./src/ts/types/virtual-env-config.d.ts"],
+      "@whitespaces/schemas/*": ["./src/types/schemas/*"],
+      "@whitespaces/schemas": ["./src/types/schemas/index.ts"],
+      "@whitespaces/util/*": ["./src/ts/utils/local/*"],
+      "@whitespaces/util": ["./src/ts/utils/local/index.ts"],
+      "@whitespaces/funbox": ["./src/ts/utils/local/funbox.ts"],
+      "@whitespaces/contracts/*": ["./src/ts/utils/local/*"],
+      "@whitespaces/contracts": ["./src/ts/utils/local/index.ts"]
+    }
+  },
+  "include": [
+    "./src/**/*.ts",
+    "./src/**/*.tsx",
+    "./scripts/**/*.ts",
+    "vite-plugins/**/*.ts",
+    "vite.config.ts"
+  ],
+  "exclude": ["node_modules", "build", "setup-tests.ts", "./__tests__/**/*.*"]
+}

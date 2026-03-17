@@ -1,0 +1,20 @@
+kbd {
+  color: var(--sub-color);
+  background-color: var(--main-color);
+}
+
+[data-nav-item] {
+  color: var(--main-color);
+}
+
+[data-nav-item="test"] {
+  color: var(--error-color);
+}
+
+[data-nav-item="alerts"] {
+  color: var(--color-alt);
+}
+
+[data-nav-item="settings"] {
+  color: var(--caret-color);
+}

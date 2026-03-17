@@ -1,0 +1,14 @@
+{
+  "name": "whitespace-typing",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev:be": "cd backend && bun run dev",
+    "dev:fe": "cd frontend && bun run dev",
+    "dev": "concurrently \"bun run dev:be\" \"bun run dev:fe\"",
+    "install:all": "cd backend && bun install && cd ../frontend && bun install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

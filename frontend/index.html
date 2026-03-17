@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whitespaces</title>
+    <link rel="icon" href="/images/favicon.ico" />
+    <link rel="stylesheet" href="/styles/font-variables.css" />
+    <link rel="stylesheet" href="/styles/normalize.css" />
+    <link rel="stylesheet" href="/styles/gradient.css" />
+    <link rel="stylesheet" href="/styles/balloon.min.css" />
+    <link rel="stylesheet" href="/styles/index.scss" />
+  </head>
+
+  <body>
+    <div class="customBackground"></div>
+
+    <div id="notificationCenter">
+      <div class="clearAll button hidden">
+        <i class="fas fa-times"></i>
+        Clear all
+      </div>
+      <div class="history"></div>
+    </div>
+
+    <div id="barTimerProgress" class="timerMain">
+      <div class="opacityWrapper" style="opacity: 0">
+        <div class="bar"></div>
+      </div>
+    </div>
+
+    <div id="popups"></div>
+
+    <div id="app" class="content-grid focus hidden">
+      <main class="full-width content-grid" style="height: 100%">
+        <div class="page pageTest" id="pageTest">
+          <div id="typingTest">
+            <div id="wordsWrapper">
+              <div id="caret"></div>
+              <div id="words" class="words"></div>
+            </div>
+          </div>
+          <div id="result" class="hidden">
+            <div class="stats">
+              <div class="wpm">
+                <div class="top">wpm</div>
+                <div class="bottom"></div>
+              </div>
+              <div class="acc">
+                <div class="top">acc</div>
+                <div class="bottom"></div>
+              </div>
+            </div>
+            <div class="buttons">
+              <div class="button" id="restartTestButton">
+                <i class="fas fa-redo-alt"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page pageAbout hidden full-width" id="pageAbout"></div>
+        <div class="page pageSettings hidden" id="pageSettings"></div>
+        <div class="page pageLogin hidden" id="pageLogin"></div>
+        <div class="page pageAccount hidden" id="pageAccount"></div>
+        <div class="page pageProfile hidden" id="pageProfile"></div>
+        <div class="page pageLeaderboards hidden" id="pageLeaderboards"></div>
+      </main>
+    </div>
+
+  <link rel="stylesheet" href="" id="globalFunBoxTheme" type="text/css" />
+  <script type="module" src="/src/ts/index.ts"></script>
+</body>
+</html>

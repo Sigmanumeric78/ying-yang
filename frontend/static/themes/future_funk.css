@@ -1,0 +1,21 @@
+[data-nav-item="test"] {
+  color: #f04e98;
+}
+
+[data-nav-item="leaderboards"] {
+  color: #f8bed6;
+}
+
+[data-nav-item="about"] {
+  color: #f6eb61;
+}
+
+[data-nav-item="settings"] {
+  color: #a4dbe8;
+}
+
+[data-nav-item="alerts"],
+[data-nav-item="account"],
+[data-nav-item="login"] {
+  color: #a266ed;
+}

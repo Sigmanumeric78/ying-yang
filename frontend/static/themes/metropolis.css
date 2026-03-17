@@ -1,0 +1,10 @@
+header #logo .bottom {
+  color: #f4bc46;
+}
+
+[data-nav-item="test"],
+[data-nav-item="leaderboards"],
+[data-nav-item="about"],
+[data-nav-item="settings"] {
+  color: #d44729;
+}

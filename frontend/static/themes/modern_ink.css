@@ -1,0 +1,9 @@
+[data-nav-item="test"],
+[data-nav-item="account"],
+[data-nav-item="login"] {
+  color: #ff0000;
+}
+
+.word.error {
+  border-bottom: solid 2px #ff0000;
+}

@@ -1,0 +1,13 @@
+[data-nav-item="test"],
+[data-nav-item="leaderboards"],
+[data-nav-item="about"],
+[data-nav-item="settings"] {
+  color: #f79777;
+}
+
+[data-nav-item="test"]:hover,
+[data-nav-item="leaderboards"]:hover,
+[data-nav-item="about"]:hover,
+[data-nav-item="settings"]:hover {
+  color: #ffca99;
+}
