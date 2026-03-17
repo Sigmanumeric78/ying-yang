@@ -1,4 +1,6 @@
-export type Difficulty = "normal" | "expert" | "master";
+import type { Difficulty } from "./shared";
+
+export type { Difficulty };
 
 export interface Config {
   theme: string;
