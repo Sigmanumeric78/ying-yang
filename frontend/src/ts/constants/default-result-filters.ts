@@ -2,6 +2,9 @@ import { ResultFilters } from "@whitespaces/schemas/users";
 import { LanguageList } from "./languages";
 import { getFunboxNames } from "@whitespaces/funbox";
 
+const safeLanguageList = LanguageList || ["english"];
+const safeFunboxNames = getFunboxNames() || [];
+
 const object: ResultFilters = {
   _id: "default",
   name: "defaults",
@@ -59,10 +62,10 @@ const object: ResultFilters = {
   tags: {
     none: true,
   },
-  language: Object.fromEntries(LanguageList.map((lang) => [lang, true])),
+  language: Object.fromEntries(safeLanguageList.map((lang) => [lang, true])),
   funbox: {
     none: true,
-    ...Object.fromEntries(getFunboxNames().map((funbox) => [funbox, true])),
+    ...Object.fromEntries(safeFunboxNames.map((funbox) => [funbox, true])),
   },
 };
 

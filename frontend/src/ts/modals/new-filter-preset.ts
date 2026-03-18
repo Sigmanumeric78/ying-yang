@@ -15,7 +15,7 @@ const newFilterPresetModal = new SimpleModal({
       type: "text",
       initVal: "",
       validation: {
-        schema: ResultFiltersSchema.shape.name,
+        schema: (ResultFiltersSchema as any)?.shape?.name,
       },
     },
   ],

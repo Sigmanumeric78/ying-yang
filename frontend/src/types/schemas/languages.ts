@@ -14,6 +14,10 @@ export interface LanguageObject {
   words: string[];
   noLazyMode?: boolean;
   bcp47?: string;
+  ligatures?: boolean;
+  rightToLeft?: boolean;
+  additionalAccents?: boolean | string[][];
+  orderedByFrequency?: boolean;
 }
 
 export const languages: Record<Language, LanguageConfig> = {};

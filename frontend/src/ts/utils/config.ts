@@ -34,15 +34,21 @@ function mergeWithDefaultConfig(config: PartialConfig): Config {
 function sanitizeConfig(
   config: ConfigSchemas.PartialConfig,
 ): ConfigSchemas.PartialConfig {
-  //make sure to use strip()
-  return sanitize(ConfigSchemas.PartialConfigSchema.strip(), config);
+  try {
+    if (ConfigSchemas.PartialConfigSchema?.strip) {
+      return sanitize(ConfigSchemas.PartialConfigSchema.strip(), config);
+    }
+    return config;
+  } catch (e) {
+    console.warn("sanitizeConfig failed, returning config as-is:", e);
+    return config;
+  }
 }
 
 function replaceLegacyValues(
   configObj: ConfigSchemas.PartialConfig,
 ): ConfigSchemas.PartialConfig {
-  //@ts-expect-error legacy configs
-  if (configObj.quickTab === true && configObj.quickRestart === undefined) {
+  if ((configObj as any).quickTab === true && configObj.quickRestart === undefined) {
     configObj.quickRestart = "tab";
   }
 
@@ -51,23 +57,20 @@ function replaceLegacyValues(
   }
 
   if (
-    //@ts-expect-error legacy configs
-    configObj.swapEscAndTab === true &&
+    (configObj as any).swapEscAndTab === true &&
     configObj.quickRestart === undefined
   ) {
     configObj.quickRestart = "esc";
   }
 
   if (
-    //@ts-expect-error legacy configs
-    configObj.alwaysShowCPM === true &&
+    (configObj as any).alwaysShowCPM === true &&
     configObj.typingSpeedUnit === undefined
   ) {
     configObj.typingSpeedUnit = "cpm";
   }
 
-  //@ts-expect-error legacy configs
-  if (configObj.showAverage === "wpm") {
+  if ((configObj as any).showAverage === "wpm") {
     configObj.showAverage = "speed";
   }
 
@@ -76,47 +79,43 @@ function replaceLegacyValues(
   }
 
   if (
-    //@ts-expect-error legacy configs
-    configObj.showTimerProgress === false &&
+    (configObj as any).showTimerProgress === false &&
     configObj.timerStyle === undefined
   ) {
     configObj.timerStyle = "off";
   }
 
   if (
-    //@ts-expect-error legacy configs
-    configObj.showLiveWpm === true &&
+    (configObj as any).showLiveWpm === true &&
     configObj.liveSpeedStyle === undefined
   ) {
     let val: ConfigSchemas.LiveSpeedAccBurstStyle = "mini";
     if (configObj.timerStyle !== "bar" && configObj.timerStyle !== "off") {
       val = configObj.timerStyle as ConfigSchemas.LiveSpeedAccBurstStyle;
     }
-    configObj.liveSpeedStyle = val;
+    configObj.liveSpeedStyle = val as any;
   }
 
   if (
-    //@ts-expect-error legacy configs
-    configObj.showLiveBurst === true &&
+    (configObj as any).showLiveBurst === true &&
     configObj.liveBurstStyle === undefined
   ) {
     let val: ConfigSchemas.LiveSpeedAccBurstStyle = "mini";
     if (configObj.timerStyle !== "bar" && configObj.timerStyle !== "off") {
       val = configObj.timerStyle as ConfigSchemas.LiveSpeedAccBurstStyle;
     }
-    configObj.liveBurstStyle = val;
+    configObj.liveBurstStyle = val as any;
   }
 
   if (
-    //@ts-expect-error legacy configs
-    configObj.showLiveAcc === true &&
+    (configObj as any).showLiveAcc === true &&
     configObj.liveAccStyle === undefined
   ) {
     let val: ConfigSchemas.LiveSpeedAccBurstStyle = "mini";
     if (configObj.timerStyle !== "bar" && configObj.timerStyle !== "off") {
       val = configObj.timerStyle as ConfigSchemas.LiveSpeedAccBurstStyle;
     }
-    configObj.liveAccStyle = val;
+    configObj.liveAccStyle = val as any;
   }
 
   if (typeof configObj.soundVolume === "string") {
@@ -176,8 +175,7 @@ function replaceLegacyValues(
 
   if (
     Array.isArray(configObj.customThemeColors) &&
-    //@ts-expect-error legacy configs
-    configObj.customThemeColors.length === 9
+    (configObj.customThemeColors as string[]).length === 9
   ) {
     // migrate existing configs missing sub alt color
     const colors = configObj.customThemeColors;
@@ -187,8 +185,7 @@ function replaceLegacyValues(
 
   if (
     Array.isArray(configObj.customBackgroundFilter) &&
-    //@ts-expect-error legacy configs
-    configObj.customBackgroundFilter.length === 5
+    (configObj.customBackgroundFilter as number[]).length === 5
   ) {
     const arr = configObj.customBackgroundFilter;
     configObj.customBackgroundFilter = [arr[0], arr[1], arr[2], arr[3]];

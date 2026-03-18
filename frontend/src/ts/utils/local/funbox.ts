@@ -1,7 +1,13 @@
 export interface FunboxMetadata {
   name: string;
   canGetPb: boolean;
+  alias?: string;
+  properties?: string[];
+  description?: string;
+  every?: string;
 }
+
+export type FunboxProperty = string;
 
 const funboxes: Record<string, FunboxMetadata> = {
   "none": { name: "none", canGetPb: true },
@@ -26,7 +32,7 @@ export function getFunboxObject(): Record<string, FunboxMetadata> {
 }
 
 export function checkCompatibility(
-  funboxes: FunboxMetadata[],
-): { valid: boolean; error?: string } {
+  funboxes: FunboxMetadata[] | string[],
+): { valid: boolean; error?: string } | boolean {
   return { valid: true };
 }

@@ -1,3 +1,11 @@
-import { LayoutName, LayoutNameSchema } from "@whitespaces/schemas/layouts";
+import { LayoutName } from "@whitespaces/schemas/layouts";
 
-export const LayoutsList: LayoutName[] = LayoutNameSchema._def.values;
+export const LayoutsList: LayoutName[] = [
+  "qwerty",
+  "dvorak",
+  "colemak",
+  "colemak_dh",
+  "workman",
+  "azerty",
+  "qwertz",
+];

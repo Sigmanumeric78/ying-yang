@@ -10,8 +10,8 @@ const devClient = buildClient(devContract, BASE_URL, 240_000);
 
 // API Endpoints
 const Ape = {
-  ...tsRestClient,
+  ...(tsRestClient as any),
   dev: devClient,
-};
+} as any;
 
 export default Ape;

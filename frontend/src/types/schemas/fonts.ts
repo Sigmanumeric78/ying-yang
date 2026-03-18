@@ -14,7 +14,8 @@ export type KnownFontName =
   | "Cascadia_Code"
   | "Menlo"
   | "Monaco"
-  | "Consolas";
+  | "Consolas"
+  | "Noto_Naskh_Arabic";
 
 export interface FontConfig {
   name: FontName;

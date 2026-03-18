@@ -39,3 +39,7 @@ export function isSafeNumber(value: unknown): value is number {
 export function safeNumber(n: unknown): number {
   return typeof n === "number" && !isNaN(n) ? n : 0;
 }
+
+export function kogasa(cov: number): number {
+  return 100 * (1 - Math.tanh(cov + Math.pow(cov, 3) / 3 + Math.pow(cov, 5) / 5));
+}

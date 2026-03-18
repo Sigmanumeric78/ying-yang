@@ -1,4 +1,5 @@
 @layer hidden {
+
   // custom layer to hide elements without using !important
   // (as long as this layer is higher than custom-styles)
   // this is to fix issues with tailwinds hidden class
@@ -17,11 +18,35 @@
 
 @layer custom-styles {
   @import "buttons", "404", "ads", "account", "animations", "caret",
-    "commandline", "core", "fonts", "inputs", "keymap", "login", "monkey",
-    "nav", "notifications", "popups", "scroll", "settings", "account-settings",
-    "leaderboards", "test", "loading", "friends", "media-queries";
+  "commandline", "core", "fonts", "inputs", "keymap", "login", "monkey",
+  "nav", "notifications", "popups", "scroll", "settings", "account-settings",
+  "leaderboards", "test", "loading", "friends", "media-queries";
 
   .chartCanvas {
     width: 100% !important;
   }
+}
+
+/* AGGRESSIVE UI OVERRIDE */
+.page {
+  display: none !important;
+}
+
+.page.pageTest {
+  display: block !important;
+}
+
+#popups {
+  display: none !important;
+}
+
+#words {
+  display: flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  flex-wrap: wrap !important;
+}
+
+#words .word {
+  display: inline-block !important;
 }

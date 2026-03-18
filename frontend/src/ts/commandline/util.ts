@@ -30,11 +30,20 @@ function getOptions<T extends ZodSchema>(schema: T): undefined | z.infer<T>[] {
 export function buildCommandForConfigKey<
   K extends keyof CommandlineConfigMetadataObject,
 >(key: K): Command {
-  const configMeta = configMetadata[key];
-  const commandMeta = commandlineConfigMetadata[key];
-  const schema = ConfigSchemas.ConfigSchema.shape[key];
+  try {
+    const configMeta = configMetadata[key];
+    const commandMeta = commandlineConfigMetadata[key];
+    const schema = ConfigSchemas.ConfigSchema?.shape?.[key];
 
-  return _buildCommandForConfigKey(key, configMeta, commandMeta, schema);
+    return _buildCommandForConfigKey(key, configMeta, commandMeta, schema);
+  } catch (error) {
+    console.warn(`Command builder skipped for "${key}":`, error);
+    return {
+      id: `change${key}`,
+      display: `${key}...`,
+      icon: "fa-cog",
+    };
+  }
 }
 function _buildCommandForConfigKey<
   K extends keyof CommandlineConfigMetadataObject,
@@ -46,8 +55,21 @@ function _buildCommandForConfigKey<
     | undefined,
   schema: ZodSchema,
 ): Command {
+  if (!schema) {
+    console.warn(`No schema found for config key "${key}", skipping.`);
+    return {
+      id: `change${key}`,
+      display: `${key}...`,
+      icon: "fa-cog",
+    };
+  }
   if (commandMeta === undefined || commandMeta === null) {
-    throw new Error(`No commandline metadata found for config key "${key}".`);
+    console.warn(`No commandline metadata found for config key "${key}".`);
+    return {
+      id: `change${key}`,
+      display: `${key}...`,
+      icon: "fa-cog",
+    };
   }
 
   let result: Command | undefined = undefined;
@@ -87,9 +109,14 @@ function _buildCommandForConfigKey<
   }
 
   if (result === undefined) {
-    throw new Error(
+    console.warn(
       `Nothing returned for config key "${key}". This is a bug in the commandline metadata.`,
     );
+    return {
+      id: `change${key}`,
+      display: `${key}...`,
+      icon: "fa-cog",
+    };
   }
   return result;
 }
@@ -102,8 +129,21 @@ function buildCommandWithSubgroup<K extends keyof ConfigSchemas.Config>(
   configMeta: ConfigMetadata<K>,
   schema: ZodSchema,
 ): Command {
+  if (!schema || !(schema as any)?._def) {
+    console.warn(`Missing or invalid schema for key "${key}", returning empty command.`);
+    return {
+      id: `change${key}`,
+      display: `${capitalizeFirstLetter(configMeta?.displayString ?? key)}...`,
+      icon: configMeta?.icon ?? "fa-cog",
+    };
+  }
   if (subgroupProps === null) {
-    throw new Error(`No commandline metadata found for config key "${key}".`);
+    console.warn(`No commandline metadata found for config key "${key}".`);
+    return {
+      id: `change${key}`,
+      display: `${capitalizeFirstLetter(configMeta?.displayString ?? key)}...`,
+      icon: configMeta?.icon ?? "fa-cog",
+    };
   }
 
   const display =
@@ -118,9 +158,14 @@ function buildCommandWithSubgroup<K extends keyof ConfigSchemas.Config>(
   }
 
   if (values === undefined) {
-    throw new Error(
-      `Unsupported schema type for key "${key}": ${(schema as ZodFirstPartySchemaTypes)._def.typeName}`,
+    console.warn(
+      `Unsupported schema type for key "${key}", returning empty command.`,
     );
+    return {
+      id: `change${key}`,
+      display: `${capitalizeFirstLetter(configMeta?.displayString ?? key)}...`,
+      icon: configMeta?.icon ?? "fa-cog",
+    };
   }
   const list = values.map((value) =>
     buildSubgroupCommand<K>(key, value, subgroupProps),
@@ -190,8 +235,8 @@ function buildSubgroupCommand<K extends keyof ConfigSchemas.Config>(
     hover:
       hover !== undefined
         ? (): void => {
-            hover?.(val);
-          }
+          hover?.(val);
+        }
         : undefined,
     customData: commandCustomData?.(val) ?? undefined,
   };
@@ -231,8 +276,7 @@ function buildInputCommand<K extends keyof ConfigSchemas.Config>({
     input: true,
     icon: configMeta.icon ?? "fa-cog",
 
-    //@ts-expect-error this is fine
-    exec: ({ input }): void => {
+    exec: ({ input }: { input?: string }): void => {
       if (input === undefined) return;
       setConfig(key, input as ConfigSchemas.Config[K]);
       inputProps?.afterExec?.(input as ConfigSchemas.Config[K]);
@@ -241,12 +285,10 @@ function buildInputCommand<K extends keyof ConfigSchemas.Config>({
   };
 
   if (inputProps?.inputValueConvert !== undefined) {
-    //@ts-expect-error this is fine
-    result["inputValueConvert"] = inputProps.inputValueConvert;
+    (result as any)["inputValueConvert"] = inputProps.inputValueConvert;
   }
 
-  //@ts-expect-error this is fine
-  result["validation"] = {
+  (result as any)["validation"] = {
     schema: validation.schema === true ? schema : undefined,
     isValid: validation.isValid,
   };

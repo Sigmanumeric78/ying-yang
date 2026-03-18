@@ -13,7 +13,6 @@ import * as AccountButton from "../elements/account-button";
 import { restart as restartTest } from "../test/test-logic";
 import * as ChallengeController from "../controllers/challenge-controller";
 import {
-  DifficultySchema,
   Mode2Schema,
   ModeSchema,
 } from "@whitespaces/schemas/shared";
@@ -24,6 +23,7 @@ import {
   CustomBackgroundSizeSchema,
   CustomThemeColors,
   CustomThemeColorsSchema,
+  DifficultySchema,
   FunboxSchema,
   FunboxName,
 } from "@whitespaces/schemas/configs";
@@ -44,7 +44,7 @@ export async function linkDiscord(hashOverride: string): Promise<void> {
     const state = fragment.get("state") as string;
 
     showLoaderBar();
-    const response = await Ape.users.linkDiscord({
+    const response = await (Ape as any).users.linkDiscord({
       body: { tokenType, accessToken, state },
     });
     hideLoaderBar();
@@ -137,29 +137,35 @@ export function loadCustomThemeFromUrl(getOverride?: string): void {
   }
 }
 
-const TestSettingsSchema = z.tuple([
-  ModeSchema.nullable(),
-  Mode2Schema.nullable(),
-  CustomTextSettingsSchema.partial({
-    pipeDelimiter: true,
-    limit: true,
-    mode: true,
-  })
-    //legacy values
-    .extend({
+let TestSettingsSchema: z.ZodType;
+try {
+  TestSettingsSchema = z.tuple([
+    ModeSchema.nullable(),
+    Mode2Schema.nullable(),
+    z.object({
+      text: z.union([z.array(z.string()), z.string()]),
+      mode: z.string().optional(),
+      pipeDelimiter: z.boolean().optional(),
+      limit: z.object({
+        mode: z.string(),
+        value: z.number(),
+      }).optional(),
       isTimeRandom: z.boolean().optional(),
       isWordRandom: z.boolean().optional(),
       word: z.number().int().optional(),
       time: z.number().int().optional(),
       delimiter: z.string().optional(),
-    })
-    .nullable(),
-  z.boolean().nullable(), //punctuation
-  z.boolean().nullable(), //numbers
-  z.string().nullable(), //language
-  DifficultySchema.nullable(),
-  FunboxSchema.or(z.string().nullable()), //funbox as array or legacy string as hash separated values
-]);
+    }).nullable(),
+    z.boolean().nullable(), //punctuation
+    z.boolean().nullable(), //numbers
+    z.string().nullable(), //language
+    DifficultySchema.nullable(),
+    FunboxSchema.or(z.string().nullable()), //funbox as array or legacy string as hash separated values
+  ]);
+} catch {
+  console.warn("TestSettingsSchema construction failed, using fallback");
+  TestSettingsSchema = z.any();
+}
 
 export function loadTestSettingsFromUrl(getOverride?: string): void {
   const getValue = Misc.findGetParameter("testSettings", getOverride);

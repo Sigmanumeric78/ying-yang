@@ -9,12 +9,21 @@ export interface LeaderboardEntry {
   discordAvatar?: string;
   name: string;
   isPremium?: boolean;
+  uid?: string;
+  badgeId?: number;
+  isPb?: boolean;
+  friendsRank?: number;
 }
 
 export interface XpLeaderboardEntry {
   rank: number;
   name: string;
   xp: number;
+  totalXp?: number;
+  uid?: string;
+  lastActivityTimestamp?: number;
+  badgeId?: number;
+  timeTypedSeconds?: number;
   discordId?: string;
   discordAvatar?: string;
   isPremium?: boolean;

@@ -39,6 +39,7 @@ export interface PersonalBests {
 
 export const ModeSchema = z.any();
 export const Mode2Schema = z.any();
-export const DifficultySchema = z.any();
 export const PersonalBestSchema = z.any();
 export const PersonalBestsSchema = z.any();
+
+export type Mode2Custom = "custom";

@@ -1,8 +1,14 @@
 export function parseWithSchema<T>(
   jsonString: string,
   schema: { parse: (data: unknown) => T },
+  options?: {
+    migrate?: (value: Record<string, unknown> | unknown[]) => T;
+  },
 ): T {
-  const data = JSON.parse(jsonString);
+  let data = JSON.parse(jsonString);
+  if (options?.migrate) {
+    data = options.migrate(data);
+  }
   return schema.parse(data);
 }
 

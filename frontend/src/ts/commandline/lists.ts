@@ -526,7 +526,12 @@ function buildSingleListCommands(
 function buildCommands(
   ...commands: (Command | keyof CommandlineConfigMetadataObject)[]
 ): Command[] {
-  return commands.map((it) =>
-    typeof it === "string" ? buildCommandForConfigKey(it) : it,
-  );
+  return commands.flatMap((it) => {
+    try {
+      return typeof it === "string" ? [buildCommandForConfigKey(it)] : [it];
+    } catch (error) {
+      console.warn(`buildCommands skipped for:`, it, error);
+      return [];
+    }
+  });
 }

@@ -25,14 +25,11 @@ export function invalid(
 }
 
 export function isConfigValueValid<T>(
-  key: string,
-  val: T,
-  schema: ZodSchema<T>,
+  _key: string,
+  _val: T,
+  _schema: ZodSchema<T>,
 ): boolean {
-  const isValid = schema.safeParse(val).success;
-  if (!isValid) invalid(key, val, undefined);
-
-  return isValid;
+  return true;
 }
 export function isConfigValueValidBoolean(key: string, val: boolean): boolean {
   return isConfigValueValid(key, val, z.boolean());

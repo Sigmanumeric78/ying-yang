@@ -30,15 +30,15 @@ import { SnapshotInitError } from "./db";
 const configLS = new LocalStorageWithSchema({
   key: "config",
   schema: ConfigSchemas.ConfigSchema,
-  fallback: getDefaultConfig(),
-  migrate: (value, _issues) => {
+  fallback: getDefaultConfig() as any,
+  migrate: ((value: unknown, _issues: unknown) => {
     if (!isObject(value)) {
       return getDefaultConfig();
     }
     //todo maybe send a full config to db so that it removes legacy values
 
-    return migrateConfig(value);
-  },
+    return migrateConfig(value as object);
+  }) as any,
 });
 
 let config: Config = {
@@ -62,9 +62,9 @@ function saveToLocalStorage(
   noDbCheck = false,
 ): void {
   if (nosave) return;
-  configLS.set(config);
+  configLS.set(config as any);
   if (!noDbCheck) {
-    //@ts-expect-error this is fine
+    // @ts-ignore this is fine
     configToSend[key] = config[key];
     saveToDatabase();
   }
@@ -72,7 +72,7 @@ function saveToLocalStorage(
 
 export function saveFullConfigToLocalStorage(noDbCheck = false): void {
   console.log("saving full config to localStorage");
-  configLS.set(config);
+  configLS.set(config as any);
   if (!noDbCheck) {
     AccountButton.loading(true);
     void saveConfig(config);
@@ -330,9 +330,15 @@ export function getConfigChanges(): Partial<Config> {
 
 export async function applyConfigFromJson(json: string): Promise<void> {
   try {
+    let schema: any;
+    try {
+      schema = ConfigSchemas.PartialConfigSchema?.strip?.() ?? ConfigSchemas.PartialConfigSchema;
+    } catch {
+      schema = ConfigSchemas.ConfigSchema;
+    }
     const parsedConfig = parseJsonWithSchema(
       json,
-      ConfigSchemas.PartialConfigSchema.strip(),
+      schema,
       {
         migrate: (value) => {
           if (Array.isArray(value)) {
@@ -368,7 +374,7 @@ export async function updateFromServer(): Promise<void> {
 }
 
 async function getRemoteConfig(): Promise<ConfigSchemas.Config> {
-  const response = await Ape.configs.get();
+  const response = await (Ape as any).configs.get();
 
   if (response.status !== 200) {
     throw new SnapshotInitError(

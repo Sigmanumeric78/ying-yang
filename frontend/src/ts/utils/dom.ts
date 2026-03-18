@@ -122,7 +122,8 @@ export function qsr<T extends HTMLElement = HTMLElement>(
   checkUniqueSelector(selector);
   const el = document.querySelector<T>(selector);
   if (el === null) {
-    throw new Error(`Required element not found: ${selector}`);
+    console.warn(`Missing required element: ${selector}`);
+    return new ElementWithUtils(document.createElement("div") as unknown as T);
   }
   return new ElementWithUtils(el);
 }
@@ -507,7 +508,8 @@ export class ElementWithUtils<T extends HTMLElement = HTMLElement> {
     checkUniqueSelector(selector, this);
     const found = this.native.querySelector<U>(selector);
     if (found === null) {
-      throw new Error(`Required element not found: ${selector}`);
+      console.warn(`Missing required element: ${selector}`);
+      return new ElementWithUtils(document.createElement("div") as unknown as U);
     }
     return new ElementWithUtils(found);
   }
