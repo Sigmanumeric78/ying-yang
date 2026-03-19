@@ -77,7 +77,7 @@ function verifyRequirement(
       }
     }
   } else if (requirementType === "afk" && requirements.afk) {
-    const requirementValue = requirements.afk;
+    const requirementValue = requirements.afk as { max?: number };
     if (requirementValue.max) {
       if (Math.round(afk) > requirementValue.max) {
         requirementsMet = false;
@@ -85,7 +85,7 @@ function verifyRequirement(
       }
     }
   } else if (requirementType === "time" && requirements.time) {
-    const requirementValue = requirements.time;
+    const requirementValue = requirements.time as { min?: number };
     if (requirementValue.min) {
       if (Math.round(result.testDuration) < requirementValue.min) {
         requirementsMet = false;
@@ -93,7 +93,7 @@ function verifyRequirement(
       }
     }
   } else if (requirementType === "funbox" && requirements.funbox) {
-    const funboxMode = requirements.funbox.exact;
+    const funboxMode = (requirements.funbox as any).exact;
     if (funboxMode === undefined) {
       throw new Error("Funbox mode is undefined");
     }
@@ -114,7 +114,7 @@ function verifyRequirement(
       }
     }
   } else if (requirementType === "raw" && requirements.raw) {
-    const requirementValue = requirements.raw;
+    const requirementValue = requirements.raw as { exact?: number };
     if (requirementValue.exact) {
       if (Math.round(result.rawWpm) !== requirementValue.exact) {
         requirementsMet = false;
@@ -122,7 +122,7 @@ function verifyRequirement(
       }
     }
   } else if (requirementType === "con" && requirements.con) {
-    const requirementValue = requirements.con;
+    const requirementValue = requirements.con as { exact?: number };
     if (requirementValue.exact) {
       if (Math.round(result.consistency) !== requirementValue.exact) {
         requirementsMet = false;
@@ -130,7 +130,7 @@ function verifyRequirement(
       }
     }
   } else if (requirementType === "config" && requirements.config) {
-    const requirementValue = requirements.config;
+    const requirementValue = requirements.config as object;
     for (const configKey of Misc.typedKeys(requirementValue)) {
       const configValue = requirementValue[configKey];
       if (Config[configKey as keyof ConfigType] !== configValue) {

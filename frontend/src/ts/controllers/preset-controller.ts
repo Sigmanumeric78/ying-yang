@@ -30,7 +30,7 @@ export async function apply(_id: string): Promise<void> {
   ) {
     TagController.clear(true);
     if (presetToApply.config.tags) {
-      for (const tagId of presetToApply.config.tags) {
+      for (const tagId of presetToApply.config.tags as any[]) {
         TagController.set(tagId, true, false);
       }
       TagController.saveActiveToLocalStorage();

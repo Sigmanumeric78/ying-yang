@@ -181,7 +181,7 @@ async function validateQuotes(): Promise<void> {
     }
 
     //check schema
-    const schema = QuoteDataSchema.extend({
+    const schema = (QuoteDataSchema as any).extend({
       language: LanguageSchema
         //icelandic only exists as icelandic_1k, language in quote file is stripped of its size
         .or(z.literal("icelandic")),
@@ -271,7 +271,7 @@ async function validateLanguages(): Promise<void> {
     }
     problems.addValidation(
       language,
-      LanguageObjectSchema.extend({
+      (LanguageObjectSchema as any).extend({
         _comment: z.string().optional(),
       }).safeParse(languageFileData),
     );

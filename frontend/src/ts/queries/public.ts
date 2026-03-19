@@ -91,7 +91,7 @@ async function fetchSpeedHistogram(): Promise<
     topPercentage?: string;
   }[] = [];
   const labels: string[] = [];
-  const sum = Object.values(data).reduce((sum, it) => (sum += it), 0);
+  const sum = Object.values(data).reduce((sum: number, it: any) => sum + (it as number), 0) as number;
   let topPercentage = 100;
 
   const keys = Object.keys(data).sort(

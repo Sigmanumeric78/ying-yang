@@ -116,7 +116,7 @@ async function initializeEditState(id: string): Promise<void> {
   } else {
     state.presetType = "partial";
     edittedPreset.settingGroups.forEach((currentActiveSettingGroup) =>
-      state.checkboxes.set(currentActiveSettingGroup, true),
+      state.checkboxes.set(currentActiveSettingGroup as any, true),
     );
   }
   state.setPresetToCurrent = false;

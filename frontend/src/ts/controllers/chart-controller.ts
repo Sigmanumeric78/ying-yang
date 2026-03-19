@@ -297,7 +297,7 @@ export const result = new ChartWithUpdateColors<
                 firstHighlightWordIndex,
                 lastHighlightWordIndex,
               );
-            } catch {}
+            } catch { }
             return "";
           },
         },
@@ -752,25 +752,24 @@ export const accountActivity = new ChartWithUpdateColors<
                 tooltipItem.dataIndex
               ] as ActivityChartDataPoint;
               const typingSpeedUnit = getTypingSpeedUnit(
-                Config.typingSpeedUnit,
+                Config.typingSpeedUnit as any,
               );
               return `Time Typing: ${DateTime.secondsToString(
                 Math.round(resultData.y * 60),
                 true,
                 true,
-              )}\nTests Completed: ${
-                resultData.amount
-              }\nRestarts per test: ${Numbers.roundTo2(
-                (resultData.restarts ?? 0) / (resultData.amount ?? 0),
-              )}\nHighest ${Config.typingSpeedUnit.toUpperCase()}: ${Numbers.roundTo2(
-                typingSpeedUnit.fromWpm(resultData.maxWpm ?? 0),
-              )}\nAverage ${Config.typingSpeedUnit.toUpperCase()}: ${Numbers.roundTo2(
-                typingSpeedUnit.fromWpm(resultData.avgWpm ?? 0),
-              )}\nAverage Accuracy: ${Numbers.roundTo2(
-                resultData.avgAcc ?? 0,
-              )}%\nAverage Consistency: ${Numbers.roundTo2(
-                resultData.avgCon ?? 0,
-              )}%`;
+              )}\nTests Completed: ${resultData.amount
+                }\nRestarts per test: ${Numbers.roundTo2(
+                  (resultData.restarts ?? 0) / (resultData.amount ?? 0),
+                )}\nHighest ${Config.typingSpeedUnit.toUpperCase()}: ${Numbers.roundTo2(
+                  typingSpeedUnit.fromWpm(resultData.maxWpm ?? 0),
+                )}\nAverage ${Config.typingSpeedUnit.toUpperCase()}: ${Numbers.roundTo2(
+                  typingSpeedUnit.fromWpm(resultData.avgWpm ?? 0),
+                )}\nAverage Accuracy: ${Numbers.roundTo2(
+                  resultData.avgAcc ?? 0,
+                )}%\nAverage Consistency: ${Numbers.roundTo2(
+                  resultData.avgCon ?? 0,
+                )}%`;
             },
             label: function (): string {
               return "";
@@ -1107,10 +1106,10 @@ function updateAverage100(): void {
 async function updateColors<
   TType extends ChartType = "bar" | "line" | "scatter",
   TData =
-    | HistoryChartData[]
-    | AccChartData[]
-    | ActivityChartDataPoint[]
-    | number[],
+  | HistoryChartData[]
+  | AccChartData[]
+  | ActivityChartDataPoint[]
+  | number[],
   TLabel = string,
 >(
   chart: ChartWithUpdateColors<TType, TData, TLabel>,
@@ -1192,7 +1191,6 @@ async function updateColors<
     return;
   }
 
-  //@ts-expect-error it's too difficult to figure out these types, but this works
   chart.data.datasets[0].borderColor = (ctx): string => {
     // oxlint-disable-next-line no-unsafe-member-access
     const isPb = ctx.raw?.isPb as boolean;
@@ -1326,7 +1324,7 @@ async function updateColors<
     (
       dataset0.trendlineLinear as TrendlineLinearPlugin.TrendlineLinearOptions
     ).style = colors.sub;
-  } catch {}
+  } catch { }
 
   (
     (chart.options as PluginChartOptions<TType>).plugins.annotation

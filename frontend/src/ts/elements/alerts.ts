@@ -84,7 +84,8 @@ function hide(): void {
           return a.concat(b);
         }, []);
 
-      for (const r of rewardsClaimed) {
+      for (const rawR of rewardsClaimed) {
+        const r = rawR as any;
         if (r.type === "xp") {
           totalXpClaimed += r.item;
         } else if (r.type === "badge") {

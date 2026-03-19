@@ -80,7 +80,7 @@ new ValidatedHtmlInputElement(nameInputEl, {
   schema: UserNameSchema,
   isValid: remoteValidation(
     async (name) => Ape.users.getNameAvailability({ params: { name } }),
-    { check: (data) => data.available || "Name not available" },
+    { check: (data) => (data as any).available || "Name not available" },
   ),
   debounceDelay: 1000,
   callback: (result) => {
@@ -226,7 +226,7 @@ qs(".pageLogin .login button.signInWithGoogle")?.on("click", async () => {
   hidePreloader();
 
   if (!data.success) {
-    Notifications.add(data.message, -1);
+    Notifications.add((data as any).message, -1);
     enableInputs();
     enableSignUpButton();
   }
@@ -260,7 +260,7 @@ qs(".pageLogin .login form")?.on("submit", async (e) => {
   hidePreloader();
 
   if (!data.success) {
-    Notifications.add(data.message, -1);
+    Notifications.add((data as any).message, -1);
     enableInputs();
     enableSignUpButton();
   }
@@ -283,7 +283,7 @@ qs(".pageLogin .login button.signInWithGitHub")?.on("click", async () => {
   hidePreloader();
 
   if (!data.success) {
-    Notifications.add(data.message, -1);
+    Notifications.add((data as any).message, -1);
     enableInputs();
     enableSignUpButton();
   }
@@ -315,7 +315,7 @@ qs(".pageLogin .register form")?.on("submit", async (e) => {
 
   hidePreloader();
   if (!data.success) {
-    Notifications.add(data.message, -1);
+    Notifications.add((data as any).message, -1);
     enableInputs();
     enableSignUpButton();
   }

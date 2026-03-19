@@ -329,7 +329,7 @@ ConfigEvent.subscribe(({ key, newValue, previousValue }) => {
 
   if (getActivePage() !== "test") return;
   if (key === "mode") {
-    void update(previousValue, newValue);
+    void update(previousValue as any, newValue as any);
   } else if (
     ["time", "quoteLength", "words", "numbers", "punctuation"].includes(
       key ?? "",

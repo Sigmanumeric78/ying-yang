@@ -14,7 +14,7 @@ export type FontConfig = {
     }
 );
 
-export const Fonts: Record<KnownFontName, FontConfig> = {
+export const Fonts: Record<string, FontConfig> = {
   Roboto_Mono: {
     fileName: "RobotoMono-Regular.woff2",
   },

@@ -165,7 +165,7 @@ export function init(
 
   setCustomTextName("practise", undefined);
 
-  before.mode = mode;
+  before.mode = mode as any;
   before.punctuation = punctuation;
   before.numbers = numbers;
   before.customText = customText;

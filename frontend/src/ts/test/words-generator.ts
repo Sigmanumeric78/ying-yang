@@ -930,7 +930,7 @@ export async function getNextWord(
 
   if (
     Config.punctuation &&
-    !currentLanguage.originalPunctuation &&
+    !(currentLanguage as any).originalPunctuation &&
     !isCurrentlyUsingFunboxSection
   ) {
     randomWord = await punctuateWord(

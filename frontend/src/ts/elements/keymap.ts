@@ -25,7 +25,8 @@ export const keyDataDelimiter = "\uE000";
 const keymap = qsr("#keymap");
 
 const stenoKeys: LayoutObject = {
-  keymapShowTopRow: true,
+  name: "steno",
+  keymapShowTopRow: true as any,
   type: "matrix",
   keys: {
     row1: [],

@@ -416,7 +416,7 @@ async function fillSettingsPage(): Promise<void> {
     validation: {
       schema: true,
       inputValueConvert: (it) =>
-        getTypingSpeedUnit(Config.typingSpeedUnit).toWpm(
+        getTypingSpeedUnit(Config.typingSpeedUnit as any).toWpm(
           new Number(it).valueOf(),
         ),
     },
@@ -437,7 +437,7 @@ async function fillSettingsPage(): Promise<void> {
     validation: {
       schema: true,
       inputValueConvert: (it) =>
-        getTypingSpeedUnit(Config.typingSpeedUnit).toWpm(
+        getTypingSpeedUnit(Config.typingSpeedUnit as any).toWpm(
           new Number(it).valueOf(),
         ),
     },
@@ -503,7 +503,7 @@ function setActiveFunboxButton(): void {
     if (Config.funbox.includes(funboxName as FunboxName)) {
       button.classList.add("active");
     } else if (
-      !checkCompatibility(getActiveFunboxNames(), funboxName as FunboxName)
+      !checkCompatibility([...getActiveFunboxNames(), funboxName] as FunboxName[])
     ) {
       button.classList.add("disabled");
     }
@@ -641,7 +641,7 @@ export async function update(
   setInputValue(
     "paceCaret",
     ".pageSettings .section[data-config-name='paceCaret'] input.customPaceCaretSpeed",
-    getTypingSpeedUnit(Config.typingSpeedUnit).fromWpm(
+    getTypingSpeedUnit(Config.typingSpeedUnit as any).fromWpm(
       Config.paceCaretCustomSpeed,
     ),
   );
@@ -649,7 +649,7 @@ export async function update(
   setInputValue(
     "minWpmCustomSpeed",
     ".pageSettings .section[data-config-name='minWpm'] input.customMinWpmSpeed",
-    getTypingSpeedUnit(Config.typingSpeedUnit).fromWpm(
+    getTypingSpeedUnit(Config.typingSpeedUnit as any).fromWpm(
       Config.minWpmCustomSpeed,
     ),
   );
@@ -663,7 +663,7 @@ export async function update(
   setInputValue(
     "minBurstCustomSpeed",
     ".pageSettings .section[data-config-name='minBurst'] input.customMinBurst",
-    getTypingSpeedUnit(Config.typingSpeedUnit).fromWpm(
+    getTypingSpeedUnit(Config.typingSpeedUnit as any).fromWpm(
       Config.minBurstCustomSpeed,
     ),
   );

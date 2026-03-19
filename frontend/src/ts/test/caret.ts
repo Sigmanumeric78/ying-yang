@@ -41,11 +41,11 @@ export function updatePosition(noAnim = false): void {
   });
 }
 
-export const caret = new Caret(qsr("#caret"), Config.caretStyle);
+export const caret = new Caret(qsr("#caret"), Config.caretStyle as any);
 
 subscribe(({ key }) => {
   if (key === "caretStyle") {
-    caret.setStyle(Config.caretStyle);
+    caret.setStyle(Config.caretStyle as any);
     updatePosition(true);
   }
   if (key === "smoothCaret") {

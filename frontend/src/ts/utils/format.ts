@@ -42,7 +42,7 @@ export class Formatting {
     const options = { ...FORMAT_DEFAULT_OPTIONS, ...formatOptions };
     if (wpm === undefined || wpm === null) return options.fallback ?? "";
 
-    const result = getTypingSpeedUnit(this.config.typingSpeedUnit).fromWpm(wpm);
+    const result = getTypingSpeedUnit(this.config.typingSpeedUnit as TypingSpeedUnit).fromWpm(wpm);
 
     return this.number(result, options);
   }
@@ -76,7 +76,7 @@ export class Formatting {
   }
 
   get typingSpeedUnit(): TypingSpeedUnit {
-    return this.config.typingSpeedUnit;
+    return this.config.typingSpeedUnit as TypingSpeedUnit;
   }
 
   private number(

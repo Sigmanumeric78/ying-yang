@@ -384,7 +384,7 @@ export async function show(showOptions?: ShowOptions): Promise<void> {
         modalEl.qsr(".toggleFavorites").show();
       }
 
-      const quoteMod = DB.getSnapshot()?.quoteMod;
+      const quoteMod = (DB.getSnapshot() as any)?.quoteMod;
       const isQuoteMod =
         quoteMod !== undefined &&
         (quoteMod === true || (quoteMod as string) !== "");

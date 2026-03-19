@@ -282,7 +282,7 @@ export class Caret {
       easing?: string;
     };
   }): void {
-    if (this.style === "off") return;
+    if ((this.style as string) === "off") return;
     requestDebouncedAnimationFrame(`caret.${this.id}.goTo`, () => {
       const word = wordsCache.qs(
         `.word[data-wordindex="${options.wordIndex}"]`,

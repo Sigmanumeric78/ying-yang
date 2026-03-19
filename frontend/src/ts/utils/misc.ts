@@ -108,8 +108,8 @@ export function objectToQueryString<T extends string | number | boolean>(
       // Arrays get encoded as a comma(%2C)-separated list
       str.push(
         encodeURIComponent(p) +
-          "=" +
-          encodeURIComponent(obj[p] as unknown as T),
+        "=" +
+        encodeURIComponent(obj[p] as unknown as T),
       );
     }
   }
@@ -769,8 +769,8 @@ export function formatTypingStatsRatio(stats: {
 
 export function addToGlobal(items: Record<string, unknown>): void {
   for (const [name, item] of Object.entries(items)) {
-    //@ts-expect-error dev
-    window[name] = item;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any)[name] = item;
   }
 }
 

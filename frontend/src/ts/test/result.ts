@@ -84,15 +84,15 @@ export function toggleUserFakeChartData(): void {
 let resultAnnotation: AnnotationOptions<"line">[] = [];
 
 async function updateChartData(): Promise<void> {
-  if (result.chartData === "toolong") {
+  const cData = result.chartData;
+  if (cData === "toolong" || cData === undefined || Array.isArray(cData)) {
     ChartController.result.getDataset("wpm").data = [];
     ChartController.result.getDataset("raw").data = [];
     ChartController.result.getDataset("burst").data = [];
     ChartController.result.getDataset("error").data = [];
     return;
   }
-
-  const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit);
+  const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit as any);
   ChartController.result.getScale("wpm").title.text =
     typingSpeedUnit.fullUnitString;
 
@@ -107,7 +107,7 @@ async function updateChartData(): Promise<void> {
   }
 
   const chartData1 = [
-    ...result.chartData.wpm.map((a) =>
+    ...cData.wpm.map((a) =>
       Numbers.roundTo2(typingSpeedUnit.fromWpm(a)),
     ),
   ];
@@ -118,9 +118,9 @@ async function updateChartData(): Promise<void> {
     ),
   ];
 
-  const valueWindow = Math.max(...result.chartData.burst) * 0.25;
+  const valueWindow = Math.max(...cData.burst) * 0.25;
   let smoothedBurst = Arrays.smoothWithValueWindow(
-    result.chartData.burst,
+    cData.burst,
     1,
     useSmoothedBurst ? valueWindow : 0,
   );
@@ -188,9 +188,9 @@ async function updateChartData(): Promise<void> {
 
   ChartController.result.getDataset("burst").data = chartData3;
 
-  ChartController.result.getDataset("error").data = result.chartData.err;
+  ChartController.result.getDataset("error").data = cData.err;
   ChartController.result.getScale("error").max = Math.max(
-    ...result.chartData.err,
+    ...cData.err,
   );
 
   if (useFakeChartData) {
@@ -220,7 +220,7 @@ function applyFakeChartData(): void {
 
   const labels = fakeChartData.wpm.map((_, i) => (i + 1).toString());
 
-  const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit);
+  const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit as any);
 
   const chartData1 = [
     ...fakeChartData.wpm.map((a) =>
@@ -286,17 +286,17 @@ export async function updateChartPBLine(): Promise<void> {
   const themecolors = getTheme();
   const localPb = await DB.getLocalPB(
     result.mode,
-    result.mode2,
+    result.mode2 as any,
     result.punctuation ?? false,
     result.numbers ?? false,
     result.language,
-    result.difficulty,
+    result.difficulty as any,
     result.lazyMode ?? false,
-    getFunbox(result.funbox),
+    (result.funbox ?? []).map(getFunbox).filter(Boolean) as any,
   );
   const localPbWpm = localPb?.wpm ?? 0;
   if (localPbWpm === 0) return;
-  const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit);
+  const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit as any);
   const chartlpb = Numbers.roundTo2(
     typingSpeedUnit.fromWpm(localPbWpm),
   ).toFixed(2);
@@ -504,12 +504,12 @@ export async function updateCrown(dontSave: boolean): Promise<void> {
 
   if (canGetPb.value) {
     const localPb = await DB.getLocalPB(
-      Config.mode,
-      result.mode2,
+      Config.mode as any,
+      result.mode2 as any,
       Config.punctuation,
       Config.numbers,
       Config.language,
-      Config.difficulty,
+      Config.difficulty as any,
       Config.lazyMode,
       getActiveFunboxes(),
     );
@@ -529,12 +529,12 @@ export async function updateCrown(dontSave: boolean): Promise<void> {
     }
   } else {
     const localPb = await DB.getLocalPB(
-      Config.mode,
-      result.mode2,
+      Config.mode as any,
+      result.mode2 as any,
       Config.punctuation,
       Config.numbers,
       Config.language,
-      Config.difficulty,
+      Config.difficulty as any,
       Config.lazyMode,
       [],
     );
@@ -584,7 +584,7 @@ type CanGetPbObject = {
 
 async function resultCanGetPb(): Promise<CanGetPbObject> {
   const funboxes = result.funbox;
-  const funboxObjects = getFunbox(result.funbox);
+  const funboxObjects = (result.funbox ?? []).map(getFunbox);
   const allFunboxesCanGetPb = funboxObjects.every((f) => f?.canGetPb);
 
   const funboxesOk = funboxes.length === 0 || allFunboxesCanGetPb;
@@ -693,18 +693,18 @@ async function updateTags(dontSave: boolean): Promise<void> {
   for (const tag of activeTags) {
     const tpb = await DB.getLocalTagPB(
       tag._id,
-      Config.mode,
-      result.mode2,
+      Config.mode as any,
+      result.mode2 as any,
       Config.punctuation,
       Config.numbers,
       Config.language,
-      Config.difficulty,
+      Config.difficulty as any,
       Config.lazyMode,
     );
     qs("#result .stats .tags .bottom")?.appendHtml(`
       <div tagid="${tag._id}" aria-label="PB: ${tpb}" data-balloon-pos="up">${tag.display}<i class="fas fa-crown hidden"></i></div>
     `);
-    const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit);
+    const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit as any);
     if (
       Config.mode !== "quote" &&
       !dontSave &&
@@ -714,12 +714,12 @@ async function updateTags(dontSave: boolean): Promise<void> {
         //new pb for that tag
         await DB.saveLocalTagPB(
           tag._id,
-          Config.mode,
-          result.mode2,
+          Config.mode as any,
+          result.mode2 as any,
           Config.punctuation,
           Config.numbers,
           Config.language,
-          Config.difficulty,
+          Config.difficulty as any,
           Config.lazyMode,
           result.wpm,
           result.acc,
@@ -1177,7 +1177,7 @@ function updateMinMaxChartValues(): void {
   }
 
   if (maxAnnotation !== null) {
-    const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit);
+    const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit as any);
     const lpbRange = typingSpeedUnit.fromWpm(20);
     if (
       maxChartVal >= maxAnnotation - lpbRange &&

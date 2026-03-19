@@ -105,6 +105,9 @@ const obj: Config = {
   tapeMargin: 50,
   maxLineWidth: 0,
   playTimeWarning: "off",
+  restartOnError: false,
+  colorThemeMode: "dark",
+  hideElements: {},
 };
 
 export function getDefaultConfig(): Config {

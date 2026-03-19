@@ -28,7 +28,8 @@ for (const funbox of getAllFunboxes()) {
     available: () => {
       const activeNames = getActiveFunboxNames();
       if (activeNames.includes(funbox.name)) return true;
-      return checkCompatibility(activeNames, funbox.name);
+      const comp = (checkCompatibility as any)(activeNames, funbox.name);
+      return typeof comp === "boolean" ? comp : (comp?.valid ?? false);
     },
     sticky: true,
     alias: funbox.alias,

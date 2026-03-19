@@ -60,9 +60,9 @@ function buildApi(timeout: number): (args: ApiFetcherArgs) => Promise<{
 
       if (compatibilityCheckHeader !== null && !bannerShownThisSession) {
         const backendCheck = parseInt(compatibilityCheckHeader);
-        if (backendCheck !== COMPATIBILITY_CHECK) {
+        if (backendCheck !== (COMPATIBILITY_CHECK as unknown as number)) {
           const message =
-            backendCheck > COMPATIBILITY_CHECK
+            backendCheck > (COMPATIBILITY_CHECK as unknown as number)
               ? `Looks like the client and server versions are mismatched (backend is newer). Please refresh the page.`
               : `Looks like our monkeys didn't deploy the new server version correctly. If this message persists contact support.`;
           addBanner({

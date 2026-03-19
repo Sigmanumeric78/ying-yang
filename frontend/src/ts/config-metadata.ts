@@ -886,6 +886,24 @@ export const configMetadata: ConfigMetadataObject = {
   },
 
   // ads
+  restartOnError: {
+    icon: "fa-redo",
+    changeRequiresRestart: true,
+    group: "behavior",
+    overrideValue: undefined,
+  },
+  colorThemeMode: {
+    icon: "fa-palette",
+    changeRequiresRestart: false,
+    group: "theme",
+    overrideValue: undefined,
+  },
+  hideElements: {
+    icon: "fa-eye-slash",
+    changeRequiresRestart: false,
+    group: "theme",
+    overrideValue: undefined,
+  },
   ads: {
     icon: "fa-ad",
     changeRequiresRestart: false,

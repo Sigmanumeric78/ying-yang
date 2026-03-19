@@ -65,7 +65,7 @@ export function DataTable<TData, TValue = unknown>(
   const [sorting, setSorting] = useLocalStorage<SortingState>({
     //oxlint-disable-next-line solid/reactivity
     key: `${props.id}Sort`,
-    schema: SortingStateSchema,
+    schema: SortingStateSchema as any,
     fallback: [],
     //migrate old state from sorted-table
     migrate: (value: Record<string, unknown> | unknown[]) =>

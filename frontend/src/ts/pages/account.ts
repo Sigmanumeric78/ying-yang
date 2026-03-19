@@ -259,7 +259,7 @@ async function fillContent(): Promise<void> {
 
   const activityChartData: ActivityChartData = {};
   const histogramChartData: number[] = [];
-  const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit);
+  const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit as any);
 
   filteredResults = [];
   qs(".pageAccount .history table tbody")?.empty();
@@ -297,7 +297,7 @@ async function fillContent(): Promise<void> {
             `${result.mode2}`, //legacy results could have a number in mode2
           )
         ) {
-          timefilter = `${result.mode2}` as `${number}`;
+          timefilter = `${result.mode2}` as any;
         }
         if (
           !ResultFilters.getFilter(
@@ -311,13 +311,13 @@ async function fillContent(): Promise<void> {
           return;
         }
       } else if (result.mode === "words") {
-        let wordfilter: Mode2Custom<"words"> = "custom";
+        let wordfilter: Mode2<"words"> | "custom" = "custom";
         if (
           ["10", "25", "50", "100", "200"].includes(
             `${result.mode2}`, //legacy results could have a number in mode2
           )
         ) {
-          wordfilter = `${result.mode2}` as `${number}`;
+          wordfilter = `${result.mode2}` as any;
         }
         if (
           !ResultFilters.getFilter(
@@ -552,9 +552,9 @@ async function fillContent(): Promise<void> {
     ) {
       //test finished before testDuration field was introduced - estimate
       if (result.mode === "time") {
-        tt = parseInt(result.mode2);
+        tt = parseInt(result.mode2 as string);
       } else if (result.mode === "words") {
-        tt = (parseInt(result.mode2) / result.wpm) * 60;
+        tt = (parseInt(result.mode2 as string) / result.wpm) * 60;
       }
     } else {
       tt = parseFloat(result.testDuration as unknown as string); //legacy results could have a string here
@@ -618,7 +618,7 @@ async function fillContent(): Promise<void> {
       wpm: Numbers.roundTo2(typingSpeedUnit.fromWpm(result.wpm)),
       acc: result.acc,
       mode: result.mode,
-      mode2: result.mode2,
+      mode2: result.mode2 as string,
       punctuation: result.punctuation,
       language: result.language,
       timestamp: result.timestamp,
@@ -1069,7 +1069,7 @@ qs(".pageAccount")?.onChild(
     const result = filteredResults.find((it) => it._id === resultId);
     if (result === undefined) return;
 
-    let chartData = result.chartData as ChartData;
+    let chartData = result.chartData as any as ChartData;
 
     if (chartData === undefined) {
       //need to load full result
@@ -1094,7 +1094,7 @@ qs(".pageAccount")?.onChild(
       chartData = response.body.data.chartData as ChartData;
 
       //update local cache
-      result.chartData = chartData;
+      result.chartData = chartData as any;
       const dbResult = DB.getSnapshot()?.results?.find(
         (it) => it._id === result._id,
       );

@@ -253,16 +253,16 @@ export class SimpleModal {
         inputsEl?.appendHtml(`
           <div>
             ${buildTag({
-              tagname,
-              classes,
-              attributes: {
-                ...attributes,
-                min: input.min.toString(),
-                max: input.max.toString(),
-                step: input.step?.toString(),
-                oninput: "this.nextElementSibling.innerHTML = this.value",
-              },
-            })}
+          tagname,
+          classes,
+          attributes: {
+            ...attributes,
+            min: input.min.toString(),
+            max: input.max.toString(),
+            step: input.step?.toString(),
+            oninput: "this.nextElementSibling.innerHTML = this.value",
+          },
+        })}
             <span>${input.initVal ?? ""}</span>
           </div>
           `);
@@ -336,9 +336,8 @@ export class SimpleModal {
           isValid:
             input.validation.isValid !== undefined
               ? async (val: string) => {
-                  //@ts-expect-error this is fine
-                  return input.validation.isValid(val, this);
-                }
+                return (input.validation as any).isValid(val, this);
+              }
               : undefined,
 
           callback: (result: ValidationResult) => {

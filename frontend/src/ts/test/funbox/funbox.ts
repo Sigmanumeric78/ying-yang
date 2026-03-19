@@ -47,7 +47,7 @@ export function setFunbox(funbox: FunboxName[]): boolean {
 
 export function toggleFunbox(funbox: FunboxName): void {
   if (
-    !checkCompatibility(getActiveFunboxNames(), funbox) &&
+    !checkCompatibility([...getActiveFunboxNames(), funbox] as FunboxName[]) &&
     !Config.funbox.includes(funbox)
   ) {
     Notifications.add(

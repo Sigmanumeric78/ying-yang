@@ -80,6 +80,7 @@ export interface Result<M extends Mode = Mode> {
   tags?: string[];
   funbox?: string[];
   bailedOut?: boolean;
+  isPb?: boolean;
   charStats?: [number, number, number, number];
   restartCount?: number;
   incompleteTestSeconds?: number;

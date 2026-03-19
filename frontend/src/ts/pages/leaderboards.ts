@@ -355,7 +355,6 @@ async function requestData(update = false): Promise<void> {
     state.pageSize = dataResponse.body.data.pageSize;
 
     if (state.type === "daily") {
-      //@ts-expect-error not sure why this is causing errors when it's clearly defined in the schema
       // oxlint-disable-next-line no-unsafe-assignment
       state.minWpm = dataResponse.body.data.minWpm;
     }
@@ -454,17 +453,15 @@ function buildTableRow(entry: LeaderboardEntry, me = false): HTMLElement {
       <td>
         <div class="avatarNameBadge">
           <div class="avatarPlaceholder"></div>
-          <a href="${location.origin}/profile/${
-            entry.name
-          }" class="entryName" uid=${entry.uid} router-link>${entry.name}</a>
+          <a href="${location.origin}/profile/${entry.name
+    }" class="entryName" uid=${entry.uid} router-link>${entry.name}</a>
           <div class="flagsAndBadge">
             ${getHtmlByUserFlags({
-              ...entry,
-              isFriend: DB.isFriend(entry.uid),
-            })}
-            ${
-              isSafeNumber(entry.badgeId) ? getBadgeHTMLbyId(entry.badgeId) : ""
-            }
+      ...entry,
+      isFriend: DB.isFriend(entry.uid),
+    })}
+            ${isSafeNumber(entry.badgeId) ? getBadgeHTMLbyId(entry.badgeId) : ""
+    }
           </div>
         </div>
       </td>
@@ -482,9 +479,9 @@ function buildTableRow(entry: LeaderboardEntry, me = false): HTMLElement {
       <td class="stat wide">${formatted.raw}</td>
       <td class="stat wide">${formatted.con}</td>
       <td class="date">${format(
-        entry.timestamp,
-        "dd MMM yyyy",
-      )}<div class="sub">${format(entry.timestamp, "HH:mm")}</div></td>
+      entry.timestamp,
+      "dd MMM yyyy",
+    )}<div class="sub">${format(entry.timestamp, "HH:mm")}</div></td>
     
   `;
   element
@@ -511,37 +508,34 @@ function buildWeeklyTableRow(
       <td>
         <div class="avatarNameBadge">
           <div class="avatarPlaceholder"></div>
-          <a href="${location.origin}/profile/${
-            entry.uid
-          }?isUid" class="entryName" uid=${entry.uid} router-link>${entry.name}</a>
+          <a href="${location.origin}/profile/${entry.uid
+    }?isUid" class="entryName" uid=${entry.uid} router-link>${entry.name}</a>
           <div class="flagsAndBadge">
             ${getHtmlByUserFlags({
-              ...entry,
-              isFriend: DB.isFriend(entry.uid),
-            })}
-            ${
-              isSafeNumber(entry.badgeId) ? getBadgeHTMLbyId(entry.badgeId) : ""
-            }
+      ...entry,
+      isFriend: DB.isFriend(entry.uid),
+    })}
+            ${isSafeNumber(entry.badgeId) ? getBadgeHTMLbyId(entry.badgeId) : ""
+    }
           </div>
         </div>
       </td>
-      <td class="stat wide">${
-        entry.totalXp < 1000 ? entry.totalXp : abbreviateNumber(entry.totalXp)
-      }</td>
+      <td class="stat wide">${entry.totalXp < 1000 ? entry.totalXp : abbreviateNumber(entry.totalXp)
+    }</td>
       <td class="stat wide">${DateTime.secondsToString(
-        Math.round(entry.timeTypedSeconds),
-        true,
-        true,
-        ":",
-      )}</td>
+      Math.round(entry.timeTypedSeconds),
+      true,
+      true,
+      ":",
+    )}</td>
       <td class="stat narrow">
       ${entry.totalXp < 1000 ? entry.totalXp : abbreviateNumber(entry.totalXp)}
       <div class="sub">${DateTime.secondsToString(
-        Math.round(entry.timeTypedSeconds),
-        true,
-        true,
-        ":",
-      )}</td>
+      Math.round(entry.timeTypedSeconds),
+      true,
+      true,
+      ":",
+    )}</td>
       </td>
       <td class="date" data-balloon-pos="left"  aria-label="${activeDiff}">
         ${format(entry.lastActivityTimestamp, "dd MMM yyyy")}
@@ -739,9 +733,9 @@ function fillUser(): void {
         <div class="stat wide">
           <div class="title">date</div>
           <div class="value">${format(
-            userData.timestamp,
-            "dd MMM yyyy HH:mm",
-          )}</div>
+      userData.timestamp,
+      "dd MMM yyyy HH:mm",
+    )}</div>
         </div>
 
 
@@ -830,16 +824,16 @@ function fillUser(): void {
         <div class="stat wide">
           <div class="title">last activity</div>
           <div class="value">${format(
-            userData.lastActivityTimestamp,
-            "dd MMM yyyy HH:mm",
-          )}</div>
+      userData.lastActivityTimestamp,
+      "dd MMM yyyy HH:mm",
+    )}</div>
         </div>
         <div class="stat narrow">
           <div>${format(userData.lastActivityTimestamp, "dd MMM yyyy")}</div>
           <div class="sub">${format(
-            userData.lastActivityTimestamp,
-            "HH:mm",
-          )}</div>
+      userData.lastActivityTimestamp,
+      "HH:mm",
+    )}</div>
         </div>
         `;
 
@@ -1023,7 +1017,7 @@ function updateTimerElement(): void {
     const totalSeconds = differenceInSeconds(new Date(), nextWeekTimestamp);
     qs(".page.pageLeaderboards .titleAndButtons .timer")?.setText(
       "Next reset in: " +
-        DateTime.secondsToString(totalSeconds, true, true, ":", true, true),
+      DateTime.secondsToString(totalSeconds, true, true, ":", true, true),
     );
   }
 }
@@ -1089,9 +1083,8 @@ async function updateValidDailyLeaderboards(): Promise<void> {
     }));
   });
 
-  validLeaderboards.daily = dailyRules.reduce<
-    Partial<Record<Mode, Record<string /*mode2*/, Language[]>>>
-  >((acc, { mode, mode2, languages }) => {
+  (validLeaderboards as any).daily = dailyRules.reduce(
+  (acc: any, { mode, mode2, languages }: any) => {
     let modes = acc[mode];
     if (modes === undefined) {
       modes = {};
@@ -1135,7 +1128,7 @@ function checkIfLeaderboardIsValid(): void {
         `no valid leaderboard config for type ${state.type} and mode ${state.mode}`,
       );
     }
-    state.mode2 = firstMode2;
+    state.mode2 = firstMode2 as Mode2<Mode>;
     supportedLanguages = validModes2[state.mode2];
   }
 
@@ -1285,7 +1278,7 @@ function updateGetParameters(): void {
   } else if (state.type === "daily") {
     params.mode = state.mode;
     params.language = state.language;
-    params.mode2 = state.mode2;
+    params.mode2 = state.mode2 as string;
     if (state.yesterday) {
       params.yesterday = true;
     }
@@ -1302,7 +1295,7 @@ function updateGetParameters(): void {
   }
   page.setUrlParams(params);
 
-  selectorLS.set(state);
+  selectorLS.set(state as any);
 }
 
 function readGetParameters(params?: UrlParameter): void {
@@ -1326,7 +1319,7 @@ function readGetParameters(params?: UrlParameter): void {
       state.language = params.language;
     }
     if (params.mode2 !== undefined) {
-      state.mode2 = params.mode2;
+      state.mode2 = params.mode2 as Mode2<Mode>;
     }
     if (params.mode !== undefined) {
       state.mode = params.mode;
@@ -1434,7 +1427,7 @@ qs(".page.pageLeaderboards .buttonGroup.modeButtons")?.onChild(
     ) {
       if (state.mode === mode && state.mode2 === mode2) return;
       state.mode = mode;
-      state.mode2 = mode2;
+      state.mode2 = mode2 as Mode2<Mode>;
       state.page = 0;
     } else {
       return;

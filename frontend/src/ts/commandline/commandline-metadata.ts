@@ -239,7 +239,7 @@ export const commandlineConfigMetadata: CommandlineConfigMetadataObject = {
       secondKey: "minWpmCustomSpeed",
       inputValueConvert: (value) => {
         let newVal = Number(value);
-        newVal = getTypingSpeedUnit(Config.typingSpeedUnit).toWpm(newVal);
+        newVal = getTypingSpeedUnit(Config.typingSpeedUnit as any).toWpm(newVal);
         return newVal;
       },
     },
@@ -282,8 +282,7 @@ export const commandlineConfigMetadata: CommandlineConfigMetadataObject = {
       defaultValue: () => {
         return Config.customPolyglot.join(" ");
       },
-      inputValueConvert: (val) =>
-        val.trim().split(" ") as ConfigSchemas.CustomPolyglot,
+      inputValueConvert: (val) => val.trim().split(" ") as any,
       afterExec: () => {
         if (getActivePage() === "test") {
           TestLogic.restart();
@@ -406,7 +405,7 @@ export const commandlineConfigMetadata: CommandlineConfigMetadataObject = {
         if (value === "off") {
           return;
         }
-        void SoundController.previewClick(value);
+        void SoundController.previewClick(value as any);
       },
       afterExec: () => {
         void SoundController.playClick();
@@ -432,7 +431,7 @@ export const commandlineConfigMetadata: CommandlineConfigMetadataObject = {
         if (value === "off") {
           return;
         }
-        void SoundController.previewError(value);
+        void SoundController.previewError(value as any);
       },
       afterExec: () => {
         void SoundController.playError();
@@ -486,7 +485,7 @@ export const commandlineConfigMetadata: CommandlineConfigMetadataObject = {
       configValue: "custom",
       inputValueConvert: (value) => {
         let newVal = Number(value);
-        newVal = getTypingSpeedUnit(Config.typingSpeedUnit).toWpm(newVal);
+        newVal = getTypingSpeedUnit(Config.typingSpeedUnit as any).toWpm(newVal);
         return newVal;
       },
       afterExec: () => {
@@ -753,6 +752,15 @@ export const commandlineConfigMetadata: CommandlineConfigMetadataObject = {
   },
 
   //danger zone
+  restartOnError: {
+    subgroup: { options: "fromSchema" }
+  },
+  colorThemeMode: {
+    subgroup: { options: "fromSchema" }
+  },
+  hideElements: {
+    subgroup: { options: "fromSchema" }
+  },
   ads: {
     subgroup: {
       options: "fromSchema",

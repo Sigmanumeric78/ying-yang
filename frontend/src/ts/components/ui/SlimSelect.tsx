@@ -53,12 +53,11 @@ export default function SlimSelect(props: SlimSelectProps): JSXElement {
   const [isInitialMount, setIsInitialMount] = createSignal(true);
   const [isInitializing, setIsInitializing] = createSignal(true);
 
-  const getSelected = () =>
-    props.selected === undefined
-      ? []
-      : props.multiple
-        ? props.selected
-        : [props.selected];
+  const getSelected = (): string[] => {
+    if (props.selected === undefined) return [];
+    if (Array.isArray(props.selected)) return props.selected;
+    return [props.selected];
+  };
 
   // Since currentSelected is a plain let used for comparison (not reactive state), this is intentional.
   // The value gets manually updated throughout the handlers and effects, so the initial untracked call is fine.
@@ -299,9 +298,9 @@ export default function SlimSelect(props: SlimSelectProps): JSXElement {
             (currentValueExists || newValueIsValid)
           ) {
             if (props.multiple) {
-              props.onChange(newValue);
+              (props as any).onChange?.(newValue);
             } else {
-              props.onChange(newValue[0] ?? "");
+              (props as any).onChange?.(newValue[0] ?? "");
             }
 
             currentSelected = newValue;
@@ -370,9 +369,9 @@ export default function SlimSelect(props: SlimSelectProps): JSXElement {
 
         if (initialValue.length > 0 && props.onChange !== undefined) {
           if (props.multiple) {
-            props.onChange(initialValue);
+            (props as any).onChange?.(initialValue);
           } else {
-            props.onChange(initialValue[0] ?? "");
+            (props as any).onChange?.(initialValue[0] ?? "");
           }
         }
         currentSelected = initialValue;

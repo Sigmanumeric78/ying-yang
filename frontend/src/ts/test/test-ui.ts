@@ -1471,7 +1471,7 @@ export async function applyBurstHeatmap(): Promise<void> {
 
     burstlist = burstlist.map((x) => (x >= 1000 ? Infinity : x));
 
-    const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit);
+    const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit as any);
     burstlist.forEach((burst, index) => {
       burstlist[index] = Math.round(typingSpeedUnit.fromWpm(burst));
     });
@@ -1551,7 +1551,7 @@ export async function applyBurstHeatmap(): Promise<void> {
       } else {
         let wordBurstVal = parseInt(wordBurstAttr);
         wordBurstVal = Math.round(
-          getTypingSpeedUnit(Config.typingSpeedUnit).fromWpm(wordBurstVal),
+          getTypingSpeedUnit(Config.typingSpeedUnit as any).fromWpm(wordBurstVal),
         );
         steps.forEach((step) => {
           if (wordBurstVal >= step.val) {
@@ -2029,10 +2029,10 @@ ConfigEvent.subscribe(({ key, newValue }) => {
     showHideTestRestartButton(newValue === "off");
   }
   if (key === "timerOpacity") {
-    updateLiveStatsOpacity(newValue);
+    updateLiveStatsOpacity(newValue as any);
   }
   if (key === "timerColor") {
-    updateLiveStatsColor(newValue);
+    updateLiveStatsColor(newValue as any);
   }
   if (key === "showOutOfFocusWarning" && !newValue) {
     OutOfFocus.hide();

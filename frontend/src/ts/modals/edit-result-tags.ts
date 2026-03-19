@@ -137,8 +137,8 @@ async function save(): Promise<void> {
       tagsToUpdate.forEach((tag) => {
         void DB.updateLocalTagPB(
           tag,
-          result.mode,
-          result.mode2,
+          result.mode as any,
+          result.mode2 as any,
           result.punctuation,
           result.numbers,
           result.language,

@@ -59,7 +59,7 @@ const resultFiltersLS = new LocalStorageWithSchema({
       return defaultResultFilters;
     }
     return mergeWithDefaultFilters(
-      sanitize(ResultFiltersSchema.partial().strip(), unknown as ResultFilters),
+      sanitize((ResultFiltersSchema as any).partial().strip(), unknown as any as ResultFilters) as any,
     );
   },
 });
@@ -569,10 +569,9 @@ for (const el of qsa(`
       if ((e.target as HTMLElement).tagName === "BUTTON") {
         if (e.shiftKey) {
           setAllFilters(group, false);
-          filters[group][filter] =
-            true as ResultFilters[typeof group][typeof filter];
+          (filters[group] as any)[filter as string] = true;
         } else {
-          toggle(group, filter);
+          toggle(group as any, filter as string as any);
           // filters[group][filter] = !filters[group][filter];
         }
       }
@@ -954,7 +953,7 @@ for (const el of qsa(".group.presetFilterButtons .filterBtns")) {
 
 function verifyResultFiltersStructure(filterIn: ResultFilters): ResultFilters {
   const filter = mergeWithDefaultFilters(
-    sanitize(ResultFiltersSchema.partial().strip(), structuredClone(filterIn)),
+    sanitize((ResultFiltersSchema as any).partial().strip(), structuredClone(filterIn)) as any,
   );
 
   return filter;

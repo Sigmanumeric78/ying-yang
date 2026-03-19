@@ -30,11 +30,11 @@ export interface PersonalBest {
 }
 
 export interface PersonalBests {
-  time: Record<string, PersonalBest[]>;
-  words: Record<string, PersonalBest[]>;
-  quote: Record<string, PersonalBest[]>;
-  zen: Record<string, PersonalBest[]>;
-  custom: Record<string, PersonalBest[]>;
+  time: Record<string | number, PersonalBest[]>;
+  words: Record<string | number, PersonalBest[]>;
+  quote: Record<string | number, PersonalBest[]>;
+  zen: Record<string | number, PersonalBest[]>;
+  custom: Record<string | number, PersonalBest[]>;
 }
 
 export const ModeSchema = z.any();

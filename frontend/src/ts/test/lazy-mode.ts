@@ -58,10 +58,10 @@ function findAccent(
   const lookup = wordSlice.toLowerCase();
 
   const additionalAccentsMap = new Map<string, string>(
-    additionalAccents?.flatMap((rule) =>
+    (Array.isArray(additionalAccents) ? additionalAccents : [])?.flatMap((rule: any) =>
       // ignoring for now but this might need a different approach
       // oxlint-disable-next-line no-misused-spread
-      [...rule[0]].map((accent) => [accent, rule[1]]),
+      [...rule[0]].map((accent: string) => [accent, rule[1]]),
     ) ?? [],
   );
 

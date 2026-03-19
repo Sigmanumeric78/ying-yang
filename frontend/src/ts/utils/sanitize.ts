@@ -22,9 +22,8 @@ function removeProblems<T extends object | unknown[]>(
 }
 
 function getNestedValue(obj: [] | object, path: string[]): [] | object {
-  //@ts-expect-error can be array or object
   // oxlint-disable-next-line no-unsafe-return
-  return path.slice(0, -1).reduce((acc, it: string) => acc[it], obj);
+  return path.slice(0, -1).reduce((acc: any, it: string) => (acc as any)[it], obj);
 }
 
 /**
@@ -76,18 +75,15 @@ export function sanitize<T extends z.ZodTypeAny>(
         const parent = getNestedValue(current, path);
         const key = path.at(-1) as string;
 
-        //@ts-expect-error can be object or array
         // oxlint-disable-next-line no-unsafe-assignment
-        const cleaned = removeProblems(parent[key], problems);
+        const cleaned = removeProblems((parent as any)[key], problems);
 
         if (cleaned === undefined) {
-          //@ts-expect-error can be object or array
           // oxlint-disable-next-line no-dynamic-delete
-          delete parent[key];
+          delete (parent as any)[key];
         } else {
-          //@ts-expect-error can be object or array
           // oxlint-disable-next-line no-unsafe-assignment
-          parent[key] = cleaned;
+          (parent as any)[key] = cleaned;
         }
       }
     }

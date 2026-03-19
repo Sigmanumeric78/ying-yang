@@ -23,7 +23,7 @@ let startTimestamp = 0;
 
 export let settings: Settings | null = null;
 
-export const caret = new Caret(qsr("#paceCaret"), Config.paceCaretStyle);
+export const caret = new Caret(qsr("#paceCaret"), Config.paceCaretStyle as any);
 
 let lastTestWpm = 0;
 
@@ -61,45 +61,45 @@ export async function init(): Promise<void> {
     wpm =
       (
         await DB.getLocalPB(
-          Config.mode,
-          mode2,
+          Config.mode as any,
+          mode2 as any,
           Config.punctuation,
           Config.numbers,
           Config.language,
-          Config.difficulty,
+          Config.difficulty as any,
           Config.lazyMode,
           getActiveFunboxes(),
         )
       )?.wpm ?? 0;
   } else if (Config.paceCaret === "tagPb") {
     wpm = await DB.getActiveTagsPB(
-      Config.mode,
-      mode2,
+      Config.mode as any,
+      mode2 as any,
       Config.punctuation,
       Config.numbers,
       Config.language,
-      Config.difficulty,
+      Config.difficulty as any,
       Config.lazyMode,
     );
   } else if (Config.paceCaret === "average") {
     [wpm] = await DB.getUserAverage10(
-      Config.mode,
-      mode2,
+      Config.mode as any,
+      mode2 as any,
       Config.punctuation,
       Config.numbers,
       Config.language,
-      Config.difficulty,
+      Config.difficulty as any,
       Config.lazyMode,
     );
     wpm = Math.round(wpm);
   } else if (Config.paceCaret === "daily") {
     wpm = await DB.getUserDailyBest(
-      Config.mode,
-      mode2,
+      Config.mode as any,
+      mode2 as any,
       Config.punctuation,
       Config.numbers,
       Config.language,
-      Config.difficulty,
+      Config.difficulty as any,
       Config.lazyMode,
     );
     wpm = Math.round(wpm);
@@ -268,6 +268,6 @@ export function start(): void {
 ConfigEvent.subscribe(({ key }) => {
   if (key === "paceCaret") void init();
   if (key === "paceCaretStyle") {
-    caret.setStyle(Config.paceCaretStyle);
+    caret.setStyle(Config.paceCaretStyle as any);
   }
 });

@@ -223,11 +223,11 @@ function AvatarAndName(props: {
     const lastResult = getLastResult();
     if (lastResult === undefined) return "";
 
-    const streakOffset = (props.profile as Snapshot).streakHourOffset;
+    const streakOffset = (props.profile as unknown as Snapshot).streakHourOffset;
 
     const dayInMilis = 1000 * 60 * 60 * 24;
 
-    let target = getCurrentDayTimestamp(streakOffset) + dayInMilis;
+    let target = getCurrentDayTimestamp() + dayInMilis;
     if (target < Date.now()) {
       target += dayInMilis;
     }
@@ -235,8 +235,8 @@ function AvatarAndName(props: {
 
     if (lastResult !== undefined) {
       //check if the last result is from today
-      const isToday = dateIsToday(lastResult.timestamp, streakOffset);
-      const isYesterday = dateIsYesterday(lastResult.timestamp, streakOffset);
+      const isToday = dateIsToday(lastResult.timestamp);
+      const isYesterday = dateIsYesterday(lastResult.timestamp);
 
       const offsetString = isSafeNumber(streakOffset)
         ? `(${streakOffset > 0 ? "+" : ""}${streakOffset} offset)`
@@ -286,12 +286,12 @@ function AvatarAndName(props: {
           </div>
         </AutoShrink>
         <UserBadge
-          id={props.profile.inventory?.badges.find((it) => it.selected)?.id}
+          id={(props.profile.inventory as any)?.badges.find((it: any) => it.selected)?.id}
         />
         <For
-          each={props.profile.inventory?.badges
-            .filter((it) => !it.selected)
-            .map((it) => it.id)}
+          each={(props.profile.inventory as any)?.badges
+            .filter((it: any) => !it.selected)
+            .map((it: any) => it.id)}
         >
           {(badgeId) => <UserBadge id={badgeId} iconOnly />}
         </For>
@@ -299,14 +299,14 @@ function AvatarAndName(props: {
           <span aria-label={accountAgeHint()} data-balloon-pos="up">
             Joined {formatDate(props.profile.addedAt ?? 0, "dd MMM yyyy")}
           </span>
-          <Show when={(props.profile.streak ?? 0) > 1}>
+          <Show when={(props.profile.streak?.length ?? 0) > 1}>
             <span
-              aria-label={`Longest streak: ${formatStreak(props.profile.maxStreak)}${extraStreakText()}`}
+              aria-label={`Longest streak: ${formatStreak(props.profile.streak?.maxLength ?? 0)}${extraStreakText()}`}
               data-balloon-pos="up"
               data-balloon-break=""
               data-balloon-length="large"
             >
-              Current streak {formatStreak(props.profile.streak)}
+              Current streak {formatStreak(props.profile.streak?.length ?? 0)}
             </span>
           </Show>
         </div>

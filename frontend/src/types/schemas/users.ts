@@ -18,8 +18,22 @@ export type UserTag = {
 export interface ResultFilters {
   _id: string;
   name: string;
-  [key: string]: unknown;
+  difficulty: { normal: boolean; expert: boolean; master: boolean };
+  mode: { time: boolean; words: boolean; quote: boolean; custom: boolean; zen: boolean };
+  words: { "10": boolean; "25": boolean; "50": boolean; "100": boolean; "200": boolean; custom: boolean };
+  time: { "15": boolean; "30": boolean; "60": boolean; "120": boolean; custom: boolean };
+  quoteLength: { short: boolean; medium: boolean; long: boolean; thicc: boolean };
+  punctuation: { on: boolean; off: boolean };
+  numbers: { on: boolean; off: boolean };
+  date: { last_day: boolean; last_week: boolean; last_month: boolean; last_3months: boolean; all: boolean };
+  tags: Record<string, boolean>;
+  language: Record<string, boolean>;
+  funbox: Record<string, boolean>;
+  pb: { yes: boolean; no: boolean };
 }
+
+export type ResultFiltersGroup = keyof Omit<ResultFilters, "_id" | "name">;
+export type ResultFiltersGroupItem<G extends ResultFiltersGroup> = keyof ResultFilters[G] & string;
 
 export interface User {
   uid?: string;
@@ -77,10 +91,7 @@ export interface UserName {
   name: string;
 }
 
-export interface ResultFiltersGroupItem {
-  _id: string;
-  name: string;
-}
+
 
 export const UserSchema = z.any();
 export const UserNameSchema = z.any();

@@ -17,14 +17,19 @@ export interface LeaderboardEntry {
 
 export interface XpLeaderboardEntry {
   rank: number;
+  totalXp: number;
+  uid: string;
   name: string;
-  xp: number;
-  totalXp?: number;
-  uid?: string;
-  lastActivityTimestamp?: number;
+  lastActivityTimestamp: number;
   badgeId?: number;
-  timeTypedSeconds?: number;
+  timeTypedSeconds: number;
+  friendsRank?: number;
+  wpm?: number;
+  raw?: number;
+  acc?: number;
+  consistency?: number;
+  isPremium?: boolean;
   discordId?: string;
   discordAvatar?: string;
-  isPremium?: boolean;
+  allTimeLbs?: Record<string, Record<string, Record<string, any>>>;
 }

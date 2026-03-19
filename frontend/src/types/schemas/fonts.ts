@@ -13,9 +13,10 @@ export type KnownFontName =
   | "DM_Mono"
   | "Cascadia_Code"
   | "Menlo"
-  | "Monaco"
   | "Consolas"
-  | "Noto_Naskh_Arabic";
+  | "Noto_Naskh_Arabic"
+  | "IBM_Plex_Sans"
+  | "Roboto";
 
 export interface FontConfig {
   name: FontName;

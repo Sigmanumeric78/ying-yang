@@ -12,12 +12,12 @@ export async function update(): Promise<void> {
 
   const [wpm, acc] = (
     await DB.getUserAverage10(
-      Config.mode,
+      Config.mode as any,
       mode2 as never,
       Config.punctuation,
       Config.numbers,
       Config.language,
-      Config.difficulty,
+      Config.difficulty as any,
       Config.lazyMode,
     )
   ).map(Numbers.roundTo2) as [number, number];

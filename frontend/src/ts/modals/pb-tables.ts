@@ -33,7 +33,7 @@ function update(mode: Mode): void {
       return b.wpm - a.wpm;
     });
     pbs.forEach(function (pb) {
-      pb.mode2 = key;
+      (pb as any).mode2 = key;
       list.push(pb);
     });
   });

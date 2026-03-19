@@ -12,14 +12,14 @@ import { ElementWithUtils } from "../utils/dom";
 
 export type ValidationResult =
   | {
-      status: "checking" | "failed" | "warning";
-      errorMessage?: string;
-      success: false;
-    }
+    status: "checking" | "failed" | "warning";
+    errorMessage?: string;
+    success: false;
+  }
   | {
-      status: "success";
-      success: true;
-    };
+    status: "success";
+    success: true;
+  };
 
 export type IsValidResponse = true | string | { warning: string };
 
@@ -70,37 +70,37 @@ export function createInputEventHandler<T>(
   let callIsValid =
     validation.isValid !== undefined
       ? debounceIfNeeded(
-          validation.debounceDelay ?? 250,
-          async (
-            originalInput: HTMLInputElement,
-            currentValue: string,
-            checkValue: T,
-          ) => {
-            const result = await validation.isValid?.(checkValue);
-            if (originalInput.value !== currentValue) {
-              //value has change in the meantime, discard result
-              return;
-            }
+        validation.debounceDelay ?? 250,
+        async (
+          originalInput: HTMLInputElement,
+          currentValue: string,
+          checkValue: T,
+        ) => {
+          const result = await validation.isValid?.(checkValue);
+          if (originalInput.value !== currentValue) {
+            //value has change in the meantime, discard result
+            return;
+          }
 
-            if (result === true) {
-              callback({ status: "success", success: true });
+          if (result === true) {
+            callback({ status: "success", success: true });
+          } else {
+            if (typeof result === "object" && "warning" in result) {
+              callback({
+                status: "warning",
+                errorMessage: result.warning,
+                success: false,
+              });
             } else {
-              if (typeof result === "object" && "warning" in result) {
-                callback({
-                  status: "warning",
-                  errorMessage: result.warning,
-                  success: false,
-                });
-              } else {
-                callback({
-                  status: "failed",
-                  errorMessage: result,
-                  success: false,
-                });
-              }
+              callback({
+                status: "failed",
+                errorMessage: result,
+                success: false,
+              });
             }
-          },
-        )
+          }
+        },
+      )
       : undefined;
 
   return async (e) => {
@@ -150,12 +150,12 @@ export function createInputEventHandler<T>(
 export type ValidationOptions<T> = (T extends string
   ? Validation<T>
   : Validation<T> & {
-      /** convert string input. For `number`s use `Number` constructor  */
-      inputValueConvert: (val: string) => T;
-    }) & {
-  /** optional callback is called for each change of the validation result */
-  callback?: (result: ValidationResult) => void;
-};
+    /** convert string input. For `number`s use `Number` constructor  */
+    inputValueConvert: (val: string) => T;
+  }) & {
+    /** optional callback is called for each change of the validation result */
+    callback?: (result: ValidationResult) => void;
+  };
 
 export class ValidatedHtmlInputElement<
   T = string,
@@ -242,15 +242,15 @@ export type ConfigInputOptions<K extends ConfigKey, T = ConfigType[K]> = {
   validation?: (T extends string
     ? Omit<Validation<T>, "schema">
     : Omit<Validation<T>, "schema"> & {
-        inputValueConvert: (val: string) => T;
-      }) & {
-    /**set to `true` to validate against the  `ConfigSchema`  */
-    schema: boolean;
-    /** optional callback is called for each change of the validation result */
-    validationCallback?: (result: ValidationResult) => void;
-    /** Resets the value to the current config if empty */
-    resetIfEmpty?: false;
-  };
+      inputValueConvert: (val: string) => T;
+    }) & {
+      /**set to `true` to validate against the  `ConfigSchema`  */
+      schema: boolean;
+      /** optional callback is called for each change of the validation result */
+      validationCallback?: (result: ValidationResult) => void;
+      /** Resets the value to the current config if empty */
+      resetIfEmpty?: false;
+    };
 };
 
 /**
@@ -276,7 +276,6 @@ export function handleConfigInput<T extends ConfigKey>({
 
     new ValidatedHtmlInputElement(input, {
       schema: validation.schema ? schema : undefined,
-      //@ts-expect-error this is fine
       isValid: validation.isValid,
       inputValueConvert,
       callback: (result) => {

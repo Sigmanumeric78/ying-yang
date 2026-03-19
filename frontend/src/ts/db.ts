@@ -990,7 +990,7 @@ export function saveLocalResult(data: SaveLocalResultData): void {
     if (data.isPb) {
       saveLocalPB(
         data.result.mode,
-        data.result.mode2,
+        data.result.mode2 as any,
         data.result.punctuation,
         data.result.numbers,
         data.result.language,
@@ -1045,10 +1045,10 @@ export function addBadge(badge: Badge): void {
   const snapshot = getSnapshot();
   if (!snapshot) return;
 
-  snapshot.inventory ??= {
+  (snapshot.inventory as any) ??= {
     badges: [],
   };
-  snapshot.inventory.badges.push(badge);
+  (snapshot.inventory as any).badges.push(badge);
   setSnapshot(snapshot);
 }
 
@@ -1122,8 +1122,8 @@ function convertConnections(
           ? "incoming"
           : connection.status,
       ];
-    }),
-  );
+    }) as any,
+  ) as Snapshot["connections"];
 }
 
 export function isFriend(uid: string | undefined): boolean {

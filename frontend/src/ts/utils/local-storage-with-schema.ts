@@ -47,15 +47,14 @@ export class LocalStorageWithSchema<T> {
     let migrated = false;
     const { data: parsed, error } = tryCatchSync(() =>
       parseJsonWithSchema(value, this.schema, {
-        fallback: this.fallback,
-        migrate: (oldData, zodIssues) => {
+        migrate: (oldData: any) => {
           console.debug(`LS ${this.key} Schema validation failed`);
           migrated = true;
           if (this.migrate) {
             console.debug(
               `LS ${this.key} Migrating from old format to new format`,
             );
-            this.cache = this.migrate(oldData, zodIssues);
+            this.cache = this.migrate(oldData, undefined);
             return this.cache;
           } else {
             console.debug(

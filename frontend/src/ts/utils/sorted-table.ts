@@ -17,9 +17,9 @@ type SortedTableOptions<T> = {
   data?: T[];
   buildRow: (entry: T) => HTMLTableRowElement;
 } & (
-  | { initialSort?: Sort; persistence?: never }
-  | { persistence?: Persistence; initialSort?: never }
-);
+    | { initialSort?: Sort; persistence?: never }
+    | { persistence?: Persistence; initialSort?: never }
+  );
 
 export class SortedTable<T> {
   protected data: { source: T; element?: HTMLTableRowElement }[] = [];
@@ -93,8 +93,7 @@ export class SortedTable<T> {
       .qsa(`thead td[data-sort-property="${property}"]`)
       .addClass("headerSorted")
       .appendHtml(
-        `<i class="fas ${
-          descending ? "fa-sort-down" : "fa-sort-up"
+        `<i class="fas ${descending ? "fa-sort-down" : "fa-sort-up"
         } aria-hidden="true"></i>`,
       );
 
@@ -139,8 +138,7 @@ export class SortedTable<T> {
 function getValueByPath(obj: unknown, path: string): unknown {
   return path.split(".").reduce((acc, key) => {
     // oxlint-disable-next-line no-explicit-any
-    // @ts-expect-error this is fine
-    return acc !== null && acc !== undefined ? acc[key] : undefined;
+    return acc !== null && acc !== undefined ? (acc as any)[key] : undefined;
   }, obj);
 }
 

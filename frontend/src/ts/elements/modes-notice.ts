@@ -202,12 +202,12 @@ export async function update(): Promise<void> {
     }
     const mode2 = getMode2(Config, TestWords.currentQuote);
     const pb = await DB.getLocalPB(
-      Config.mode,
+      Config.mode as any,
       mode2,
       Config.punctuation,
       Config.numbers,
       Config.language,
-      Config.difficulty,
+      Config.difficulty as any,
       Config.lazyMode,
       getActiveFunboxes(),
     );

@@ -9,7 +9,7 @@ export function MyProfile(): JSXElement {
   const isOpen = () => getActivePage() === "account";
   return (
     <Show when={isOpen()} fallback="no user found">
-      <UserProfile profile={getSnapshot() as UserProfileType} isAccountPage />
+      <UserProfile profile={getSnapshot() as unknown as UserProfileType} isAccountPage />
     </Show>
   );
 }

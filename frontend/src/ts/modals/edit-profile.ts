@@ -50,7 +50,7 @@ let currentSelectedBadgeId = -1;
 function hydrateInputs(): void {
   const snapshot = DB.getSnapshot();
   if (!snapshot) return;
-  const badges = snapshot.inventory?.badges ?? [];
+  const badges = (snapshot.inventory as any)?.badges ?? [];
   const { bio, keyboard, socialProfiles, showActivityOnPublicProfile } =
     snapshot.details ?? {};
   currentSelectedBadgeId = -1;
@@ -175,7 +175,7 @@ async function updateProfile(): Promise<void> {
   }
 
   snapshot.details = response.body.data ?? updates;
-  snapshot.inventory?.badges.forEach((badge) => {
+  (snapshot.inventory as any)?.badges.forEach((badge: Badge) => {
     if (badge.id === currentSelectedBadgeId) {
       badge.selected = true;
     } else {

@@ -456,7 +456,6 @@ export class ElementWithUtils<T extends HTMLElement = HTMLElement> {
     }
     for (const [key, value] of entries) {
       if (value !== undefined) {
-        //@ts-expect-error -- Index signature issue
         this.native.style[key] = value;
       }
     }

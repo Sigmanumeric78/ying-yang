@@ -1,7 +1,7 @@
 import { showLoaderBar, hideLoaderBar } from "../../signals/loader-bar";
 import * as Notifications from "../../elements/notifications";
 import Ape from "../../ape";
-import { ApeKey, ApeKeys } from "@whitespaces/schemas/ape-keys";
+import { ApeKey } from "@whitespaces/schemas/ape-keys";
 import { format } from "date-fns/format";
 import { SimpleModal, TextArea } from "../../utils/simple-modal";
 import { isAuthenticated } from "../../firebase";
@@ -162,7 +162,7 @@ const generateApeKey = new SimpleModal({
   },
 });
 
-let apeKeys: ApeKeys | null = {};
+let apeKeys: Record<string, ApeKey> | null = {};
 
 const element = qsr("#pageAccountSettings .tab[data-tab='apeKeys']");
 
