@@ -1,0 +1,99 @@
+/* Theme Toggle Button Styles */
+
+#themeToggleButton {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+
+    i {
+      animation: spin 0.5s ease-in-out;
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  i {
+    transition: color 0.3s ease;
+  }
+
+  &::after {
+    content: attr(data-theme-name);
+    position: absolute;
+    bottom: -1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.6rem;
+    color: var(--sub-color);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Theme indicator dot */
+#themeToggleButton .theme-indicator {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  border: 2px solid var(--bg-color);
+  transition: background-color 0.3s ease;
+}
+
+/* Toast notification for theme change */
+.theme-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--main-color);
+  color: var(--bg-color);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--roundness);
+  font-size: 0.875rem;
+  font-weight: 500;
+  z-index: 10000;
+  animation: slideUp 0.3s ease, fadeOut 0.3s ease 1.7s forwards;
+  pointer-events: none;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}

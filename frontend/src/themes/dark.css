@@ -1,0 +1,99 @@
+/* Dark Theme - Whitespaces */
+
+/* Logo Styling */
+body.theme-dark header [data-ui-element="logo"] svg {
+    color: #4a9eff;
+}
+
+body.theme-dark header [data-ui-element="logoText"] {
+    color: #2d5a7b;
+}
+
+/* Animations */
+@keyframes shadow-dark {
+    to {
+        color: #1a1a2e;
+    }
+}
+
+@keyframes shadow-repeat-dark {
+    50% {
+        color: #1a1a2e;
+    }
+    100% {
+        color: #16213e;
+    }
+}
+
+/* Live WPM and Stats Text */
+body.theme-dark #liveWpm,
+body.theme-dark #liveStatsTextTop {
+    color: #e8e8e8;
+}
+
+/* Hover Animations */
+body.theme-dark #result .stats .group,
+body.theme-dark [data-nav-item]:hover,
+body.theme-dark footer button:hover,
+body.theme-dark a:not(.button):not([data-ui-variant="button"]):hover {
+    animation: shadow-repeat-dark 3s linear infinite forwards;
+}
+
+body.theme-dark [data-nav-item="account"]:hover svg {
+    color: currentColor;
+    animation: shadow-repeat-dark 3s linear infinite forwards;
+}
+
+/* Typing Test Correct Letter Styling */
+body.theme-dark #typingTest .word letter.correct,
+body.theme-dark #typingTest #words.highlight-word .word.typed letter.correct,
+body.theme-dark
+    #typingTest
+    #words.highlight-next-word
+    .word.typed
+    letter.correct,
+body.theme-dark
+    #typingTest
+    #words.highlight-next-two-words
+    .word.typed
+    letter.correct,
+body.theme-dark
+    #typingTest
+    #words.highlight-next-three-words
+    .word.typed
+    letter.correct {
+    color: var(--correct-letter-color);
+    animation: shadow-dark 5s linear 1 forwards;
+}
+
+/* Dark Theme Specific Overrides */
+body.theme-dark {
+    background-color: #0f0f1a;
+    color: #e8e8e8;
+}
+
+body.theme-dark #top,
+body.theme-dark #bottom {
+    background: linear-gradient(180deg, #0f0f1a 0%, #1a1a2e 100%);
+}
+
+body.theme-dark #middle {
+    background-color: #1a1a2e;
+}
+
+/* Force red color for incorrect letters/words across all themes */
+body.theme-dark #words {
+    --incorrect-letter-color: #d32f2f;
+    --extra-letter-color: #b71c1c;
+    /* Make correct letters 3 shades darker than theme text color */
+    --correct-letter-color: #b8b8b8;
+}
+
+body.theme-dark #typingTest .word letter.incorrect,
+body.theme-dark #typingTest .word.error letter {
+    color: #d32f2f !important;
+}
+
+body.theme-dark #typingTest .word letter.extra {
+    color: #b71c1c !important;
+}

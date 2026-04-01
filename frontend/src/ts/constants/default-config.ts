@@ -106,7 +106,7 @@ const obj: Config = {
   maxLineWidth: 0,
   playTimeWarning: "off",
   restartOnError: false,
-  colorThemeMode: "dark",
+  colorThemeMode: "blackOnWhite",
   hideElements: {},
 };
 

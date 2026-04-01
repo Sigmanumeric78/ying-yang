@@ -274,6 +274,10 @@ export const result = new ChartWithUpdateColors<
         animation: { duration: 250 },
         mode: "index",
         intersect: false,
+        filter: function (tooltipItem): boolean {
+          // Hide raw (1), errors (2), and burst (3) - only show wpm (0)
+          return tooltipItem.datasetIndex === 0;
+        },
         callbacks: {
           afterLabel: function (ti): string {
             if (prevTi === ti) return "";
@@ -297,7 +301,7 @@ export const result = new ChartWithUpdateColors<
                 firstHighlightWordIndex,
                 lastHighlightWordIndex,
               );
-            } catch { }
+            } catch {}
             return "";
           },
         },
@@ -758,18 +762,19 @@ export const accountActivity = new ChartWithUpdateColors<
                 Math.round(resultData.y * 60),
                 true,
                 true,
-              )}\nTests Completed: ${resultData.amount
-                }\nRestarts per test: ${Numbers.roundTo2(
-                  (resultData.restarts ?? 0) / (resultData.amount ?? 0),
-                )}\nHighest ${Config.typingSpeedUnit.toUpperCase()}: ${Numbers.roundTo2(
-                  typingSpeedUnit.fromWpm(resultData.maxWpm ?? 0),
-                )}\nAverage ${Config.typingSpeedUnit.toUpperCase()}: ${Numbers.roundTo2(
-                  typingSpeedUnit.fromWpm(resultData.avgWpm ?? 0),
-                )}\nAverage Accuracy: ${Numbers.roundTo2(
-                  resultData.avgAcc ?? 0,
-                )}%\nAverage Consistency: ${Numbers.roundTo2(
-                  resultData.avgCon ?? 0,
-                )}%`;
+              )}\nTests Completed: ${
+                resultData.amount
+              }\nRestarts per test: ${Numbers.roundTo2(
+                (resultData.restarts ?? 0) / (resultData.amount ?? 0),
+              )}\nHighest ${Config.typingSpeedUnit.toUpperCase()}: ${Numbers.roundTo2(
+                typingSpeedUnit.fromWpm(resultData.maxWpm ?? 0),
+              )}\nAverage ${Config.typingSpeedUnit.toUpperCase()}: ${Numbers.roundTo2(
+                typingSpeedUnit.fromWpm(resultData.avgWpm ?? 0),
+              )}\nAverage Accuracy: ${Numbers.roundTo2(
+                resultData.avgAcc ?? 0,
+              )}%\nAverage Consistency: ${Numbers.roundTo2(
+                resultData.avgCon ?? 0,
+              )}%`;
             },
             label: function (): string {
               return "";
@@ -1011,6 +1016,10 @@ export const miniResult = new ChartWithUpdateColors<
         animation: { duration: 250 },
         mode: "index",
         intersect: false,
+        filter: function (tooltipItem): boolean {
+          // Hide burst (1) and errors (2) - only show wpm (0)
+          return tooltipItem.datasetIndex === 0;
+        },
       },
     },
   },
@@ -1106,10 +1115,10 @@ function updateAverage100(): void {
 async function updateColors<
   TType extends ChartType = "bar" | "line" | "scatter",
   TData =
-  | HistoryChartData[]
-  | AccChartData[]
-  | ActivityChartDataPoint[]
-  | number[],
+    | HistoryChartData[]
+    | AccChartData[]
+    | ActivityChartDataPoint[]
+    | number[],
   TLabel = string,
 >(
   chart: ChartWithUpdateColors<TType, TData, TLabel>,
@@ -1324,7 +1333,7 @@ async function updateColors<
     (
       dataset0.trendlineLinear as TrendlineLinearPlugin.TrendlineLinearOptions
     ).style = colors.sub;
-  } catch { }
+  } catch {}
 
   (
     (chart.options as PluginChartOptions<TType>).plugins.annotation

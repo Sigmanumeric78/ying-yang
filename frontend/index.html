@@ -1339,11 +1339,17 @@
         router-link
         title="settings"
       >
+        <a class="textButton view-settings" data-nav-item="settings" href="/settings" onclick="this.blur()" router-link title="settings" >
         <div class="icon">
-          <i class="fas fa-fw fa-cog"></i>
+        <i class="fas fa-fw fa-cog"></i>
         </div>
-      </a>
-      <div class="spacer"></div>
+        </a>
+        <button class="textButton" id="themeToggleButton" onclick="this.blur()" title="cycle theme" >
+        <div class="icon">
+        <i class="fas fa-fw fa-palette"></i>
+        </div>
+        </button>
+        <div class="spacer"></div>
       <button
         class="text showAlerts"
         onclick="this.blur()"

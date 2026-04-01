@@ -107,9 +107,7 @@ async function updateChartData(): Promise<void> {
   }
 
   const chartData1 = [
-    ...cData.wpm.map((a) =>
-      Numbers.roundTo2(typingSpeedUnit.fromWpm(a)),
-    ),
+    ...cData.wpm.map((a) => Numbers.roundTo2(typingSpeedUnit.fromWpm(a))),
   ];
 
   const chartData2 = [
@@ -189,9 +187,7 @@ async function updateChartData(): Promise<void> {
   ChartController.result.getDataset("burst").data = chartData3;
 
   ChartController.result.getDataset("error").data = cData.err;
-  ChartController.result.getScale("error").max = Math.max(
-    ...cData.err,
-  );
+  ChartController.result.getScale("error").max = Math.max(...cData.err);
 
   if (useFakeChartData) {
     applyFakeChartData();
@@ -1134,11 +1130,11 @@ const resultChartDataVisibility = new LocalStorageWithSchema({
     })
     .strict(),
   fallback: {
-    raw: true,
-    burst: true,
-    errors: true,
-    pbLine: true,
-    tagPbLine: true,
+    raw: false,
+    burst: false,
+    errors: false,
+    pbLine: false,
+    tagPbLine: false,
   },
 });
 
