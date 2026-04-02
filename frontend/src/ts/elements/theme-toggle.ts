@@ -39,30 +39,24 @@ function handleThemeToggle(): void {
 
 function updateThemeIndicator(): void {
   if (themeToggleButton === null) return;
-
   const currentTheme = ThemeCycler.getCurrentTheme();
   const displayName = ThemeCycler.getThemeDisplayName(currentTheme);
 
   // Update button title
   themeToggleButton.setAttribute("data-theme-name", displayName);
-  themeToggleButton.setAttribute("title", `Theme: ${displayName} (click to cycle)`);
+  themeToggleButton.setAttribute(
+    "title",
+    `Theme: ${displayName} (click to cycle)`,
+  );
 
-  // Update or create theme indicator dot
-  let indicator = themeToggleButton.querySelector(".theme-indicator");
-  if (indicator === null) {
-    indicator = document.createElement("div");
-    indicator.className = "theme-indicator";
-    themeToggleButton.appendChild(indicator);
+  // Update or create theme name text span
+  let themeNameEl = themeToggleButton.querySelector(".theme-name");
+  if (themeNameEl === null) {
+    themeNameEl = document.createElement("span");
+    themeNameEl.className = "theme-name";
+    themeToggleButton.insertBefore(themeNameEl, themeToggleButton.firstChild);
   }
-
-  // Set indicator color based on theme
-  const themeColors: Record<ThemeCycler.CustomThemeName, string> = {
-    default: "#8c3230",
-    dark: "#4a9eff",
-    ocean: "#0077b6",
-  };
-
-  (indicator as HTMLElement).style.backgroundColor = themeColors[currentTheme];
+  (themeNameEl as HTMLElement).textContent = displayName;
 }
 
 function showThemeToast(themeName: ThemeCycler.CustomThemeName): void {

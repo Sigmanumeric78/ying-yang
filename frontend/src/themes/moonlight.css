@@ -1,0 +1,128 @@
+/* Moonlight Theme - Whitespaces */
+/* Inspired by GMK MOONLIGHT */
+
+/* Logo Styling */
+body.theme-moonlight header [data-ui-element="logo"] svg {
+  color: #c69f68;
+}
+
+body.theme-moonlight header [data-ui-element="logoText"] {
+  color: #4b5975;
+}
+
+/* Animations */
+@keyframes shadow-moonlight {
+  to {
+    color: #191f28;
+  }
+}
+
+@keyframes shadow-repeat-moonlight {
+  50% {
+    color: #191f28;
+  }
+  100% {
+    color: #c69f68;
+  }
+}
+
+/* Live WPM and Stats Text */
+body.theme-moonlight #liveWpm,
+body.theme-moonlight #liveStatsTextTop {
+  color: #c69f68;
+}
+
+/* Navigation Items Styling */
+body.theme-moonlight [data-nav-item="test"],
+body.theme-moonlight [data-nav-item="leaderboards"],
+body.theme-moonlight [data-nav-item="about"],
+body.theme-moonlight [data-nav-item="settings"] {
+  border-radius: 0.5rem !important;
+  color: #191f28 !important;
+  background: #c69f68;
+}
+
+body.theme-moonlight [data-nav-item="test"]:hover,
+body.theme-moonlight [data-nav-item="leaderboards"]:hover,
+body.theme-moonlight [data-nav-item="about"]:hover,
+body.theme-moonlight [data-nav-item="settings"]:hover {
+  border-radius: 0.5rem !important;
+  color: #4b5975 !important;
+  transition: 0.25s;
+}
+
+/* CRT Mode Navigation Glow */
+body.theme-moonlight.crtmode [data-nav-item="test"],
+body.theme-moonlight.crtmode [data-nav-item="leaderboards"],
+body.theme-moonlight.crtmode [data-nav-item="about"],
+body.theme-moonlight.crtmode [data-nav-item="settings"] {
+  box-shadow: 3px 0 1px color-mix(in srgb, #c69f68 20%, transparent),
+    -3px 0 color-mix(in srgb, #c69f68 30%, transparent),
+    0 0 3px;
+}
+
+body.theme-moonlight.crtmode header[data-focused] [data-nav-item] {
+  box-shadow: none;
+}
+
+/* Header Focus State */
+body.theme-moonlight header[data-focused] [data-nav-item],
+body.theme-moonlight header[data-focused] nav:before,
+body.theme-moonlight header[data-focused] nav:after {
+  background: var(--bg-color);
+}
+
+/* Hover Animations */
+body.theme-moonlight #result .stats .group,
+body.theme-moonlight [data-nav-item]:hover,
+body.theme-moonlight footer button:hover,
+body.theme-moonlight a:not(.button):not([data-ui-variant="button"]):hover {
+  animation: shadow-repeat-moonlight 3s linear infinite forwards;
+}
+
+body.theme-moonlight [data-nav-item="account"]:hover svg {
+  color: currentColor;
+  animation: shadow-repeat-moonlight 3s linear infinite forwards;
+}
+
+/* Typing Test Correct Letter Styling */
+body.theme-moonlight #typingTest .word letter.correct,
+body.theme-moonlight #typingTest #words.highlight-word .word.typed letter.correct,
+body.theme-moonlight #typingTest #words.highlight-next-word .word.typed letter.correct,
+body.theme-moonlight #typingTest #words.highlight-next-two-words .word.typed letter.correct,
+body.theme-moonlight #typingTest #words.highlight-next-three-words .word.typed letter.correct {
+  color: var(--correct-letter-color);
+  animation: shadow-moonlight 5s linear 1 forwards;
+}
+
+/* Moonlight Theme Background Overrides */
+body.theme-moonlight {
+  background-color: #191f28;
+  color: #c69f68;
+}
+
+body.theme-moonlight #top,
+body.theme-moonlight #bottom {
+  background: linear-gradient(180deg, #191f28 0%, #2d3a4f 100%);
+}
+
+body.theme-moonlight #middle {
+  background-color: #1a2332;
+}
+
+/* Force red color for incorrect letters/words across all themes */
+body.theme-moonlight #words {
+  --incorrect-letter-color: #d32f2f;
+  --extra-letter-color: #b71c1c;
+  /* Make correct letters 3 shades darker than theme text color */
+  --correct-letter-color: #8a7a4a;
+}
+
+body.theme-moonlight #typingTest .word letter.incorrect,
+body.theme-moonlight #typingTest .word.error letter {
+  color: #d32f2f !important;
+}
+
+body.theme-moonlight #typingTest .word letter.extra {
+  color: #b71c1c !important;
+}

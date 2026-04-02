@@ -1,0 +1,131 @@
+/* Catppuccin Theme - Whitespaces */
+/* Inspired by Catppuccin color palette */
+
+/* Logo Styling */
+body.theme-catppuccin header [data-ui-element="logo"] svg {
+  color: #cba6f7;
+}
+body.theme-catppuccin header [data-ui-element="logoText"] {
+  color: #a6adc8;
+}
+
+/* Animations */
+@keyframes shadow-catppuccin {
+  to {
+    color: #1e1e2e;
+  }
+}
+@keyframes shadow-repeat-catppuccin {
+  50% {
+    color: #313244;
+  }
+  100% {
+    color: #cdd6f4;
+  }
+}
+
+/* Live WPM and Stats Text */
+body.theme-catppuccin #liveWpm,
+body.theme-catppuccin #liveStatsTextTop {
+  color: #cdd6f4;
+}
+
+/* Hover Animations */
+body.theme-catppuccin #result .stats .group,
+body.theme-catppuccin [data-nav-item]:hover,
+body.theme-catppuccin footer button:hover,
+body.theme-catppuccin a:not(.button):not([data-ui-variant="button"]):hover {
+  animation: shadow-repeat-catppuccin 3s linear infinite forwards;
+}
+body.theme-catppuccin [data-nav-item="account"]:hover svg {
+  color: currentColor;
+  animation: shadow-repeat-catppuccin 3s linear infinite forwards;
+}
+
+/* Typing Test Correct Letter Styling */
+body.theme-catppuccin #typingTest .word letter.correct,
+body.theme-catppuccin #typingTest #words.highlight-word .word.typed letter.correct,
+body.theme-catppuccin #typingTest #words.highlight-next-word .word.typed letter.correct,
+body.theme-catppuccin #typingTest #words.highlight-next-two-words .word.typed letter.correct,
+body.theme-catppuccin #typingTest #words.highlight-next-three-words .word.typed letter.correct {
+  color: var(--correct-letter-color);
+  animation: shadow-catppuccin 5s linear 1 forwards;
+}
+
+/* Catppuccin Theme Specific Overrides */
+body.theme-catppuccin {
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+}
+body.theme-catppuccin #top,
+body.theme-catppuccin #bottom {
+  background: linear-gradient(180deg, #1e1e2e 0%, #313244 100%);
+}
+body.theme-catppuccin #middle {
+  background-color: #313244;
+}
+
+/* Colorful Navigation Items - Each nav item has its own color */
+body.theme-catppuccin [data-nav-item="test"] {
+  color: #f38ba8;
+}
+body.theme-catppuccin [data-nav-item="test"]:hover {
+  color: color-mix(in srgb, #f38ba8 75%, white 25%);
+}
+
+body.theme-catppuccin [data-nav-item="leaderboards"] {
+  color: #fab387;
+}
+body.theme-catppuccin [data-nav-item="leaderboards"]:hover {
+  color: color-mix(in srgb, #fab387 75%, white 25%);
+}
+
+body.theme-catppuccin [data-nav-item="about"] {
+  color: #f9e2af;
+}
+body.theme-catppuccin [data-nav-item="about"]:hover {
+  color: color-mix(in srgb, #f9e2af 75%, white 25%);
+}
+
+body.theme-catppuccin [data-nav-item="settings"] {
+  color: #a6e3a1;
+}
+body.theme-catppuccin [data-nav-item="settings"]:hover {
+  color: color-mix(in srgb, #a6e3a1 75%, white 25%);
+}
+
+body.theme-catppuccin [data-nav-item="account"] {
+  --themable-button-text: #89dceb;
+}
+body.theme-catppuccin [data-nav-item="account"]:hover {
+  --themable-button-text: color-mix(in srgb, var(--themable-button-text), white 25%);
+}
+
+body.theme-catppuccin [data-nav-item="alerts"] {
+  color: #89b4fa;
+}
+body.theme-catppuccin [data-nav-item="alerts"]:hover {
+  color: color-mix(in srgb, #89b4fa 75%, white 25%);
+}
+
+body.theme-catppuccin [data-nav-item="login"] {
+  color: #b4befe;
+}
+body.theme-catppuccin [data-nav-item="login"]:hover {
+  color: color-mix(in srgb, #b4befe 75%, white 25%);
+}
+
+/* Force red color for incorrect letters/words across all themes */
+body.theme-catppuccin #words {
+  --incorrect-letter-color: #d32f2f;
+  --extra-letter-color: #b71c1c;
+  /* Make correct letters 3 shades darker than theme text color */
+  --correct-letter-color: #a6adc8;
+}
+body.theme-catppuccin #typingTest .word letter.incorrect,
+body.theme-catppuccin #typingTest .word.error letter {
+  color: #d32f2f !important;
+}
+body.theme-catppuccin #typingTest .word letter.extra {
+  color: #b71c1c !important;
+}

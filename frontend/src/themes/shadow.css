@@ -1,0 +1,69 @@
+/* Shadow Theme - Whitespaces */
+/* Logo Styling */
+body.theme-shadow header [data-ui-element="logo"] svg {
+  color: #8c3230;
+}
+body.theme-shadow header [data-ui-element="logoText"] {
+  color: #557d8d;
+}
+
+/* Animations */
+@keyframes shadow-shadow {
+  to {
+    color: #000;
+  }
+}
+@keyframes shadow-repeat-shadow {
+  50% {
+    color: #000;
+  }
+  100% {
+    color: #eee;
+  }
+}
+
+/* Live WPM and Stats Text */
+body.theme-shadow #liveWpm,
+body.theme-shadow #liveStatsTextTop {
+  color: white;
+}
+
+/* Hover Animations */
+body.theme-shadow #result .stats .group,
+body.theme-shadow [data-nav-item]:hover,
+body.theme-shadow footer button:hover,
+body.theme-shadow a:not(.button):not([data-ui-variant="button"]):hover {
+  animation: shadow-repeat-shadow 3s linear infinite forwards;
+}
+
+body.theme-shadow [data-nav-item="account"]:hover svg {
+  color: currentColor;
+  animation: shadow-repeat-shadow 3s linear infinite forwards;
+}
+
+/* Typing Test Correct Letter Styling */
+body.theme-shadow #typingTest .word letter.correct,
+body.theme-shadow #typingTest #words.highlight-word .word.typed letter.correct,
+body.theme-shadow #typingTest #words.highlight-next-word .word.typed letter.correct,
+body.theme-shadow #typingTest #words.highlight-next-two-words .word.typed letter.correct,
+body.theme-shadow #typingTest #words.highlight-next-three-words .word.typed letter.correct {
+  color: var(--correct-letter-color);
+  animation: shadow-shadow 5s linear 1 forwards;
+}
+
+/* Force red color for incorrect letters/words across all themes */
+body.theme-shadow #words {
+  --incorrect-letter-color: #d32f2f;
+  --extra-letter-color: #b71c1c;
+  /* Make correct letters 3 shades darker than theme text color */
+  --correct-letter-color: #aeb4b8;
+}
+
+body.theme-shadow #typingTest .word letter.incorrect,
+body.theme-shadow #typingTest .word.error letter {
+  color: #d32f2f !important;
+}
+
+body.theme-shadow #typingTest .word letter.extra {
+  color: #b71c1c !important;
+}

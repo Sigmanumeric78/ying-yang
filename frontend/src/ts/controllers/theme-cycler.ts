@@ -1,6 +1,19 @@
-export type CustomThemeName = "default" | "dark" | "ocean";
+export type CustomThemeName =
+  | "default"
+  | "dark"
+  | "ocean"
+  | "shadow"
+  | "moonlight"
+  | "catppuccin";
 
-const themeOrder: CustomThemeName[] = ["default", "dark", "ocean"];
+const themeOrder: CustomThemeName[] = [
+  "default",
+  "dark",
+  "ocean",
+  "shadow",
+  "moonlight",
+  "catppuccin",
+];
 
 let currentThemeIndex = 0;
 let currentTheme: CustomThemeName = "default";
@@ -22,9 +35,15 @@ function initialize(): void {
 // Apply theme by updating body class
 function applyTheme(themeName: CustomThemeName): void {
   const body = document.body;
-
   // Remove all theme classes
-  body.classList.remove("theme-default", "theme-dark", "theme-ocean");
+  body.classList.remove(
+    "theme-default",
+    "theme-dark",
+    "theme-ocean",
+    "theme-shadow",
+    "theme-moonlight",
+    "theme-catppuccin",
+  );
 
   // Add new theme class
   body.classList.add(`theme-${themeName}`);
@@ -54,6 +73,9 @@ export function getThemeDisplayName(themeName: CustomThemeName): string {
     default: "Default",
     dark: "Dark",
     ocean: "Ocean",
+    shadow: "Shadow",
+    moonlight: "Moonlight",
+    catppuccin: "Catppuccin",
   };
   return displayNames[themeName] || themeName;
 }
