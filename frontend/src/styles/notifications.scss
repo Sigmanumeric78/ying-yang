@@ -7,23 +7,60 @@
   padding-top: 1rem;
   position: fixed;
   right: 1rem;
-  // top: 1rem;
+  top: 4rem;
   transition: 0.125s opacity;
 
   .clearAll.button {
-    font-size: 0.75em;
-    margin-bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    outline: none;
+    cursor: pointer;
+    font-size: 11px;
+    line-height: 1;
+    border-radius: 500px;
+    transition-property: background-color, border-color, color, box-shadow, filter;
+    transition-duration: 0.3s;
+    border: none;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    font-weight: 700;
+    text-align: center;
+    color: #616467;
+    box-shadow: inset 0 0 0 2px #616467;
+    background-color: transparent;
+    height: 0;
+    padding: 0;
     overflow: hidden;
+    margin-bottom: 0.5rem;
+    align-self: flex-end;
+    justify-self: end;
+
+    &:hover {
+      color: #fff;
+      background-color: #616467;
+      box-shadow: inset 0 0 0 2px #616467;
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
   }
+
   &.focus .clearAll {
     visibility: hidden;
   }
+
   &.focus .notif {
     visibility: hidden;
   }
+
   &.focus .notif.important {
     visibility: visible;
   }
+
   .history {
     display: grid;
     // gap: 1rem;
