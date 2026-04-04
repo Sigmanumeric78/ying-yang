@@ -31,10 +31,7 @@ import * as CustomTextState from "./../states/custom-text-name";
 import * as Funbox from "./funbox/funbox";
 import Format from "../utils/format";
 import confetti from "canvas-confetti";
-import type {
-  AnnotationOptions,
-  LabelPosition,
-} from "chartjs-plugin-annotation";
+import type { AnnotationOptions } from "chartjs-plugin-annotation";
 import Ape from "../ape";
 import { CompletedEvent } from "@whitespaces/schemas/results";
 import { getActiveFunboxes, isFunboxActiveWithProperty } from "./funbox/list";
@@ -276,52 +273,6 @@ function applyFakeChartData(): void {
 
   ChartController.result.getDataset("error").data = fakeChartData.err;
   ChartController.result.getScale("error").max = Math.max(...fakeChartData.err);
-}
-
-export async function updateChartPBLine(): Promise<void> {
-  const themecolors = getTheme();
-  const localPb = await DB.getLocalPB(
-    result.mode,
-    result.mode2 as any,
-    result.punctuation ?? false,
-    result.numbers ?? false,
-    result.language,
-    result.difficulty as any,
-    result.lazyMode ?? false,
-    (result.funbox ?? []).map(getFunbox).filter(Boolean) as any,
-  );
-  const localPbWpm = localPb?.wpm ?? 0;
-  if (localPbWpm === 0) return;
-  const typingSpeedUnit = getTypingSpeedUnit(Config.typingSpeedUnit as any);
-  const chartlpb = Numbers.roundTo2(
-    typingSpeedUnit.fromWpm(localPbWpm),
-  ).toFixed(2);
-  resultAnnotation.push({
-    display: true,
-    type: "line",
-    id: "lpb",
-    scaleID: "wpm",
-    value: chartlpb,
-    borderColor: themecolors.sub + "55",
-    borderWidth: 1,
-    // borderDash: [4, 16],
-    label: {
-      backgroundColor: themecolors.sub,
-      font: {
-        family: Config.fontFamily.replace(/_/g, " "),
-        size: 11,
-        style: "normal",
-        weight: Chart.defaults.font.weight as string,
-        lineHeight: Chart.defaults.font.lineHeight as number,
-      },
-      color: themecolors.bg,
-      padding: 3,
-      borderRadius: 3,
-      position: "center",
-      content: ` PB: ${chartlpb} `,
-      display: true,
-    },
-  });
 }
 
 function updateWpmAndAcc(): void {
@@ -684,8 +635,6 @@ async function updateTags(dontSave: boolean): Promise<void> {
   );
   qs("#result .stats .tags .editTagsButton")?.addClass("invisible");
 
-  let annotationSide: LabelPosition = "start";
-  let labelAdjust = 15;
   for (const tag of activeTags) {
     const tpb = await DB.getLocalTagPB(
       tag._id,
@@ -727,44 +676,6 @@ async function updateTags(dontSave: boolean): Promise<void> {
           `#result .stats .tags .bottom div[tagid="${tag._id}"]`,
         )?.setAttribute("aria-label", "+" + Numbers.roundTo2(result.wpm - tpb));
         // console.log("new pb for tag " + tag.display);
-      } else {
-        const themecolors = getTheme();
-        resultAnnotation.push({
-          display: true,
-          type: "line",
-          id: "tpb",
-          scaleID: "wpm",
-          value: typingSpeedUnit.fromWpm(tpb),
-          borderColor: themecolors.sub + "55",
-          borderWidth: 1,
-          // borderDash: [4, 16],
-          label: {
-            backgroundColor: themecolors.sub,
-            font: {
-              family: Config.fontFamily.replace(/_/g, " "),
-              size: 11,
-              style: "normal",
-              weight: Chart.defaults.font.weight as string,
-              lineHeight: Chart.defaults.font.lineHeight as number,
-            },
-            color: themecolors.bg,
-            padding: 3,
-            borderRadius: 3,
-            position: annotationSide,
-            xAdjust: labelAdjust,
-            display: true,
-            content: `${tag.display} PB: ${Numbers.roundTo2(
-              typingSpeedUnit.fromWpm(tpb),
-            ).toFixed(2)}`,
-          },
-        });
-        if (annotationSide === "start") {
-          annotationSide = "end";
-          labelAdjust = -15;
-        } else {
-          annotationSide = "start";
-          labelAdjust = 15;
-        }
       }
     }
   }
@@ -993,9 +904,7 @@ export async function update(
   updateQuoteFavorite(randomQuote);
   await updateCrown(dontSave);
   await updateChartData();
-  updateResultChartDataVisibility();
   updateMinMaxChartValues();
-  await updateChartPBLine();
   applyMinMaxChartValues();
   await updateTags(dontSave);
   updateOther(difficultyFailed, failReason, afkDetected, isRepeated, tooShort);
@@ -1118,26 +1027,6 @@ export async function update(
   ChartController.result.resize();
 }
 
-const resultChartDataVisibility = new LocalStorageWithSchema({
-  key: "resultChartDataVisibility",
-  schema: z
-    .object({
-      raw: z.boolean(),
-      burst: z.boolean(),
-      errors: z.boolean(),
-      pbLine: z.boolean(),
-      tagPbLine: z.boolean(),
-    })
-    .strict(),
-  fallback: {
-    raw: false,
-    burst: false,
-    errors: false,
-    pbLine: false,
-    tagPbLine: false,
-  },
-});
-
 function updateMinMaxChartValues(): void {
   const values = [];
 
@@ -1204,54 +1093,6 @@ function applyMinMaxChartValues(): void {
   ChartController.result.getScale("burst").max = maxChartVal;
 }
 
-function updateResultChartDataVisibility(): void {
-  const vis = resultChartDataVisibility.get();
-  ChartController.result.getDataset("raw").hidden = !vis.raw;
-  ChartController.result.getDataset("burst").hidden = !vis.burst;
-  ChartController.result.getDataset("error").hidden = !vis.errors;
-
-  for (const annotation of resultAnnotation) {
-    if (annotation.id === "lpb") {
-      annotation.display = vis.pbLine;
-    } else if (annotation.id === "tpb") {
-      annotation.display = vis.tagPbLine;
-    }
-  }
-
-  const buttons = qsa(".pageTest #result .chart .chartLegend button");
-
-  // Check if there are any tag PB annotations
-  const hasTagPbAnnotations = resultAnnotation.some(
-    (annotation) => annotation.id === "tpb",
-  );
-
-  for (const button of buttons) {
-    const id = button?.getAttribute("data-id") as string;
-
-    if (id === "scale") {
-      continue;
-    }
-
-    if (
-      id !== "raw" &&
-      id !== "burst" &&
-      id !== "errors" &&
-      id !== "pbLine" &&
-      id !== "tagPbLine"
-    ) {
-      continue;
-    }
-
-    button.toggleClass("active", vis[id]);
-
-    if (id === "pbLine") {
-      button.toggleClass("hidden", !isAuthenticated());
-    } else if (id === "tagPbLine") {
-      button.toggleClass("hidden", !isAuthenticated() || !hasTagPbAnnotations);
-    }
-  }
-}
-
 export function updateTagsAfterEdit(
   tagIds: string[],
   tagPbIds: string[],
@@ -1306,37 +1147,6 @@ export function updateTagsAfterEdit(
     tagIds.join(","),
   );
 }
-
-qsa(".pageTest #result .chart .chartLegend button")?.on(
-  "click",
-  async (event) => {
-    const $target = event.target as HTMLElement;
-    const id = $target.getAttribute("data-id");
-
-    if (id === "scale") {
-      setConfig("startGraphsAtZero", !Config.startGraphsAtZero);
-      return;
-    }
-
-    if (
-      id !== "raw" &&
-      id !== "burst" &&
-      id !== "errors" &&
-      id !== "pbLine" &&
-      id !== "tagPbLine"
-    ) {
-      return;
-    }
-    const vis = resultChartDataVisibility.get();
-    vis[id] = !vis[id];
-    resultChartDataVisibility.set(vis);
-
-    updateResultChartDataVisibility();
-    updateMinMaxChartValues();
-    applyMinMaxChartValues();
-    ChartController.result.update();
-  },
-);
 
 qs(".pageTest #favoriteQuoteButton")?.on("click", async () => {
   if (quoteLang === undefined || quoteId === "") {
@@ -1393,11 +1203,8 @@ ConfigEvent.subscribe(async ({ key }) => {
     TestState.resultVisible
   ) {
     resultAnnotation = [];
-
     updateWpmAndAcc();
     await updateChartData();
-    await updateChartPBLine();
-    updateResultChartDataVisibility();
     updateMinMaxChartValues();
     applyMinMaxChartValues();
     void TestUI.applyBurstHeatmap();

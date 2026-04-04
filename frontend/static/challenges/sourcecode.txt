@@ -3984,10 +3984,8 @@ backend/anticheat
           <div class="button" mode="time">time</div>
           <div class="button active" mode="words">words</div>
           <div class="button" mode="quote">quote</div>
-          <div class="button" mode="zen">zen</div>
-          <div class="button" mode="custom">custom</div>
-        </div>
-        <div class="spacer"></div>
+          </div>
+          <div class="spacer"></div>
         <div class="group timeGroup">
           <div class="button" time="15">15</div>
           <div class="button active" time="30">30</div>
@@ -4802,10 +4800,6 @@ backend/anticheat
                   </div>
                   <div class="text-button" mode="words" tabindex="2">words</div>
                   <div class="text-button" mode="quote" tabindex="2">quote</div>
-                  <div class="text-button" mode="zen" tabindex="2">zen</div>
-                  <div class="text-button" mode="custom" tabindex="2">
-                    custom
-                  </div>
                 </div>
               </div>
               <div class="group wordCount hidden">
@@ -4832,9 +4826,6 @@ backend/anticheat
                     30
                   </div>
                   <div class="text-button" timeConfig="60" tabindex="2">60</div>
-                  <div class="text-button" timeConfig="120" tabindex="2">
-                    120
-                  </div>
                   <div class="text-button" timeConfig="custom" tabindex="2">
                     <i class="fas fa-tools"></i>
                   </div>
@@ -5818,7 +5809,7 @@ backend/anticheat
                     off
                   </div>
                   <div class="button on" tabindex="0" onclick="this.blur();">
-                    
+
                   </div>
                 </div>
               </div>
@@ -6491,7 +6482,7 @@ backend/anticheat
                     tabindex="0"
                     onclick="this.blur();"
                   >
-                     
+
                   </div>
                   <div
                     class="button"
@@ -6499,7 +6490,7 @@ backend/anticheat
                     tabindex="0"
                     onclick="this.blur();"
                   >
-                     
+
                   </div>
                   <div
                     class="button"
@@ -6616,7 +6607,7 @@ backend/anticheat
                     tabindex="0"
                     onclick="this.blur();"
                   >
-                     
+
                   </div>
                   <div
                     class="button"
@@ -6624,7 +6615,7 @@ backend/anticheat
                     tabindex="0"
                     onclick="this.blur();"
                   >
-                     
+
                   </div>
                   <div
                     class="button"
@@ -9801,7 +9792,7 @@ letter {
 
 ==> ./whitespaces/static/robots.txt <==
 User-agent: *
-Disallow: 
+Disallow:
 
 ==> ./whitespaces/static/security-policy.html <==
 <!DOCTYPE html>
@@ -12465,18 +12456,18 @@ body {
     --colorful-error-color: #ca4754;
     --colorful-error-extra-color: #7e2a33;
   }
-  
+
   #menu .icon-button {
     border-radius: 10rem !important;
     background: #2f2a41;
     color: #e4e3e9;
 
   }
-  
+
   #menu .icon-button:hover {
     color: #ada6c2;
   }
-  
+
 ==> ./whitespaces/static/themes/watermelon.css <==
 :root {
   --bg-color: #1f4437;

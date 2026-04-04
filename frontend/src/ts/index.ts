@@ -3,7 +3,7 @@ import "./event-handlers/keymap";
 import "./event-handlers/test";
 import "./event-handlers/settings";
 import "./event-handlers/account";
-import "./event-handlers/leaderboards";
+
 import "./event-handlers/login";
 import "./event-handlers/nav";
 import "./elements/theme-toggle";

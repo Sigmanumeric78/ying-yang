@@ -70,7 +70,7 @@ export function getCurrentTheme(): CustomThemeName {
 // Get theme display name
 export function getThemeDisplayName(themeName: CustomThemeName): string {
   const displayNames: Record<CustomThemeName, string> = {
-    default: "Default",
+    default: "White",
     dark: "Dark",
     ocean: "Ocean",
     shadow: "Shadow",

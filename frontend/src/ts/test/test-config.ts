@@ -258,7 +258,7 @@ function updateActiveModeButtons(mode: Mode): void {
 function updateActiveExtraButtons(key: string, value: ConfigValue): void {
   if (key === "time") {
     qsa("#testConfig .time .textButton")?.removeClass("active");
-    const timeCustom = ![15, 30, 60, 120].includes(value as number)
+    const timeCustom = ![15, 30, 60].includes(value as number)
       ? "custom"
       : (value as number);
     qs(
