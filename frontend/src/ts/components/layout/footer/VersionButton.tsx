@@ -11,9 +11,6 @@ import { Fa } from "../../common/Fa";
 export function VersionButton(): JSXElement {
   const [indicatorVisible, setIndicatorVisible] = createSignal(true);
   const getVersionText = (): string => {
-    if (isDevEnvironment()) {
-      return "localhost";
-    }
     return getVersion().text;
   };
 
